@@ -18,10 +18,14 @@ extends:
 # labels allow extensible configuration options per skillet type. For example, lables can be used to
 # group multiple skillets of the same type (pan-os skillets labeled as version: 9.0 for example)
 labels:
-  terraform_provider: aws
+  terraform_provider: azure
 
 
 # Variables will be presented to the user via the Panhandler GUI. These values will then be passed to
 # the terraform binary as '--var' options, thus overriding any tfvars entries.
 # Variable names MUST match the names of the defined terraform variables
 variables:
+    - name: client_secret
+      description: Azure Client Secret
+      default: client_secret
+      type_hint: text
