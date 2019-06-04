@@ -25,19 +25,3 @@ labels:
 # the terraform binary as '--var' options, thus overriding any tfvars entries.
 # Variable names MUST match the names of the defined terraform variables
 variables:
-  - name: access_key
-    description: AWS Access Key
-    default: access_key
-    type_hint: text
-  - name: secret_key
-    description: AWS Secret Key
-    default:
-    type_hint: password
-  - name: aws_region
-    description: AWS Region
-    default: us-east-1
-    type_hint: text
-  - name: management_cidr
-    description: VMSeries mgmt source CIDR
-    default: 0.0.0.0/0
-    type_hint: text
