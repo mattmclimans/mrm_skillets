@@ -25,7 +25,20 @@ labels:
 # the terraform binary as '--var' options, thus overriding any tfvars entries.
 # Variable names MUST match the names of the defined terraform variables
 variables:
+    - name: subscription_id
+      description: Azure Client Secret
+      default: client_secret
+      type_hint: text
+    - name: client_id
+      description: Azure Client Secret
+      default: client_id
+      type_hint: text
     - name: client_secret
       description: Azure Client Secret
       default: client_secret
       type_hint: text
+    - name: tenant_id
+      description: Azure Client Secret
+      default: tenant_id
+      type_hint: text
+   

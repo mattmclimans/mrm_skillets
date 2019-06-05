@@ -3,13 +3,13 @@
 #***********************************************************************************
 variable subscription_id {
   description = "Enter client ID"
-  default     = "36a6952c-125c-4b32-943e-27e85b91d591"
+  default     = ""
 }
 
 
 variable client_id {
   description = "Enter client ID"
-  default     = "c03334c4-6323-4e07-9f7e-c42be4b7460f"
+  default     = ""
 }
 
 variable client_secret {
@@ -20,7 +20,7 @@ variable client_secret {
 
 variable tenant_id {
   description = "Enter client ID"
-  default     = "66b66353-3b76-4e41-9dc3-fee328bd400e"
+  default     = ""
 }
 
 #************************************************************************************
