@@ -16,6 +16,6 @@ module "network" {
     resource_group_name = "${var.resource_group}"
     location            = "${var.region}"
     address_space       = "${var.vnet_cidr}"
-    subnet_prefixes     = "${var.subnet_cidrs}"
-    subnet_names        = "${var.subnet_names}"
+    subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
+    subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
