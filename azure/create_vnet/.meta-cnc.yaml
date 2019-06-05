@@ -41,4 +41,29 @@ variables:
       description: Azure Client Secret
       default: tenant_id
       type_hint: text
-   
+
+    - name: region
+      description: Region
+      default: eastus
+      type_hint: text
+    - name: resource_group
+      description: Resource Group
+      default: vmseries-rg
+      type_hint: text
+    - name: vnet_name
+      description: VNET Name
+      default: vmseries-vnet
+      type_hint: text
+    - name: vnet_cidr
+      description: VNET Prefix
+      default: 10.0.0.0/16
+      type_hint: text
+    - name: subnet_names
+      description: Subnet Names
+      default: ["mgmt", "untrust", "trust"]
+      type_hint: text
+    - name: subnet_cidrs
+      description: Subnet CIDRs
+      default: ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
+      type_hint: text
+
