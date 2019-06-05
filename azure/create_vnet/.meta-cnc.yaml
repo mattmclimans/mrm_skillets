@@ -64,4 +64,4 @@ variables:
     - name: subnet_cidrs
       description: Subnet CIDRs
       default: ""
-      type_hint: text
+      type_hint: list
