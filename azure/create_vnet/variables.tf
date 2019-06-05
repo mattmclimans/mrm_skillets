@@ -28,31 +28,31 @@ variable tenant_id {
 #************************************************************************************
 variable region {
   description = "Enter a region"
-  default     = "eastus"
+  default     = ""
 }
 
 variable resource_group {
   description = "Enter a resource group"
-  default     = "mrm001"
+  default     = ""
 }
 
 variable vnet_name {
   description = "Enter VNET name"
-  default     = "vmseries-vnet"
+  default     = ""
 }
 
 variable vnet_cidr {
   description = "Enter VNET name"
-  default     = "10.0.0.0/16"
+  default     = ""
 }
 
 variable subnet_names {
   description = "Enter client ID"
-  default     = "mgmt-subnet, untrust-subnet, trust-subnet"
+  default     = ""
 }
 
 variable subnet_cidrs {
   description = "Enter client ID"
-  default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
+  default     = ""
 }
 
