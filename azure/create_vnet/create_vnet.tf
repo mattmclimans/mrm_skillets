@@ -13,6 +13,7 @@ provider "azurerm" {
 
 module "network" {
     source              = "Azure/network/azurerm"
+    vnet_name           = "${var.vnet_name}"
     resource_group_name = "${var.resource_group}"
     location            = "${var.region}"
     address_space       = "${var.vnet_cidr}"
