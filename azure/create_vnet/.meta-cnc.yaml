@@ -56,12 +56,12 @@ variables:
     - name: vnet_cidr
       description: VNET Prefix
       default: 10.0.0.0/16
-      type_hint: text
+      type_hint: ip_address
     - name: subnet_names
       description: Subnet Names
-      default:
+      default: ""
       type_hint: text
     - name: subnet_cidrs
       description: Subnet CIDRs
-      default:
-      type_hint: text
+      default: ""
+      type_hint: ip_address
