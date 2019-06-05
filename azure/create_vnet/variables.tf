@@ -48,10 +48,12 @@ variable vnet_cidr {
 
 variable subnet_names {
   description = "Enter client ID"
+  default     = ""
 }
 
-variable subnet_cidrs {
+variable "subnet_cidrs" {
   description = "Enter client ID"
+  type = list(string)
   default = ""
 }
 
