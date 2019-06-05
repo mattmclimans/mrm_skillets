@@ -11,12 +11,12 @@ provider "azurerm" {
 # CREATE SECURITY VPC & SUBNETS
 #************************************************************************************
 
-module "network" {
-    source              = "Azure/network/azurerm"
-    vnet_name           = "${var.vnet_name}"
-    resource_group_name = "${var.resource_group}"
-    location            = "${var.region}"
-    address_space       = "${var.vnet_cidr}"
-    subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
-    subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
+module "spoke" {
+  source              = "Azure/network/azurerm"
+  vnet_name           = "${var.vnet_name}"
+  resource_group_name = "${var.resource_group}"
+  location            = "${var.region}"
+  address_space       = "${var.vnet_prefix}"
+  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
+  subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
