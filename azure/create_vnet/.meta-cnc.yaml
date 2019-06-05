@@ -41,7 +41,6 @@ variables:
       description: Azure Client Secret
       default: tenant_id
       type_hint: text
-
     - name: region
       description: Region
       default: eastus
@@ -66,4 +65,3 @@ variables:
       description: Subnet CIDRs
       default: ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
       type_hint: text
-
