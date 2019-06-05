@@ -53,7 +53,6 @@ variable subnet_names {
 
 variable "subnet_cidrs" {
   description = "Enter client ID"
-  type = "list"
-  default = [""]
+  default = ""
 }
 
