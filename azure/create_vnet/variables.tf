@@ -49,12 +49,10 @@ variable vnet_cidr {
 variable subnet_names {
   type        = "list"
   description = "Enter client ID"
-  default     = []
 }
 
 variable subnet_cidrs {
   type        = "list"
   description = "Enter client ID"
-  default     = []
 }
 
