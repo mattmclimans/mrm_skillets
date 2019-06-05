@@ -16,7 +16,7 @@ module "spoke" {
   vnet_name           = "${var.vnet_name}"
   resource_group_name = "${var.resource_group}"
   location            = "${var.region}"
-  address_space       = "${var.vnet_prefix}"
+  address_space       = "${var.vnet_cidr}"
   subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
   subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
