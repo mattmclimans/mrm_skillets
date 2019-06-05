@@ -1,10 +1,10 @@
 # This is an example .meta-cnc.yaml file. This will allow Panhandler to consume this terraform project
 
 # this is the name of this skillet, should be unique within a given repository
-name: create_azure_vnet
+name: azure_create_vnet
 
 # label should be a human readable label that conveys what this skillet will do 
-label: Azure-Create VNET
+label: Azure Create VNET
 
 # description is a longer more informative version of a label
 description: Creates a single Azure VNET in a new Resource Group
