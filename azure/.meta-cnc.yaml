@@ -4,7 +4,7 @@
 name: create_azure_vnet
 
 # label should be a human readable label that conveys what this skillet will do 
-label: Create Azure VNET
+label: Azure-Create VNET
 
 # description is a longer more informative version of a label
 description: Creates a single Azure VNET in a new Resource Group
