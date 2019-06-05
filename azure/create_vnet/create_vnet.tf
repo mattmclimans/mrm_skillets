@@ -18,6 +18,6 @@ module "spoke" {
   location            = "${var.region}"
   address_space       = "${var.vnet_cidr}"
  // subnet_prefixes     = ["${split(",", replace(var.subnet_cidrs, " ", ""))}"]
-  subnet_prefixes     = ["${var.subnet_cdrs}"]
+  subnet_prefixes     = ["${var.subnet_cidrs}"]
   subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
