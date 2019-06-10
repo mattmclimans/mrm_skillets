@@ -43,7 +43,7 @@ module "internal_lb" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   frontend_address    = "${var.internal_lb_address}"
-  subnet_id           = "${module.vnet.vnet_subnets[3]}"
+  subnet_id           = "${module.vnet.vnet_subnets[2]}"
   health_probe_port   = "22"
   prefix              = "${var.prefix}"
 }
