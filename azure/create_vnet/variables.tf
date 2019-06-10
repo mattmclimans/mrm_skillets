@@ -1,5 +1,5 @@
 #************************************************************************************
-# SET REGION AND SSH KEY FOR EC2 INSTANCES
+# SET location AND SSH KEY FOR EC2 INSTANCES
 #***********************************************************************************
 variable subscription_id {
   description = "Enter client ID"
@@ -24,16 +24,16 @@ variable tenant_id {
 }
 
 #************************************************************************************
-# SET REGION AND SSH KEY FOR EC2 INSTANCES
+# SET location AND SSH KEY FOR EC2 INSTANCES
 #************************************************************************************
-variable region {
-  description = "Enter a region"
+variable location {
+  description = "Enter a location"
   default     = "eastus"
 }
 
 variable resource_group {
   description = "Enter a resource group"
-  default     = "vnet-rg"
+  default     = "mrm-rg"
 }
 
 variable vnet_name {

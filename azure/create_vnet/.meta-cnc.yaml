@@ -41,8 +41,8 @@ variables:
       description: Azure Tenant ID
       default: tenant_id
       type_hint: text
-    - name: region
-      description: Region
+    - name: location
+      description: Location
       default: eastus
       type_hint: text
     - name: resource_group
