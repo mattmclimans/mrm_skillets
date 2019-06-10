@@ -8,32 +8,11 @@ provider "azurerm" {
   tenant_id       = "${var.tenant_id}"
 }
 
-locals {
-    subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
-  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
-
-}
-
-output "SUBNET-NAME-LIST" {
-  value = "${local.subnet_names}"
-}
-output "SUBNET-PREFIX-LIST" {
-  value = "${local.subnet_prefixes}"
-}
-output "SUBNET-NAME-INDEX" {
-  value = "${local.subnet_names[1]}"
-}
-output "SUBNET-PREFIX-INDEX" {
-  value = "${local.subnet_prefixes[2]}"
-}
-
-
-
 #************************************************************************************
 # CREATE SECURITY VPC & SUBNETS
 #************************************************************************************
 
-/*
+
 
 resource "azurerm_resource_group" "rg" {
   name     = "vmseries-rg"
@@ -77,4 +56,3 @@ module "public_lb" {
   health_probe_port   = "22"
   public_lb_ports     = "${split(",", replace(var.public_lb_ports, " ", ""))}"
 }
-*/

@@ -65,10 +65,6 @@ variables:
       description: Subnet CIDRs
       default: 10.0.0.0/24,10.0.1.0/24,10.0.2.0/24
       type_hint: text
-    - name: nsg_name
-      description: NSG Name
-      default: "vmseries-nsg"
-      type_hint: text
     - name: nsg_source_prefix
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
