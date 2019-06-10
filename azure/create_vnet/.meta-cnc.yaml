@@ -59,7 +59,7 @@ variables:
       type_hint: text
     - name: subnet_names
       description: Subnet Names
-      default: {"mgmt, untrust, trust, lb"}
+      default: mgmt, untrust, trust, lb
       type_hint: text
     - name: subnet_cidrs
       description: Subnet CIDRs
