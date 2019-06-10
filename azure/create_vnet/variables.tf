@@ -46,12 +46,12 @@ variable vnet_cidr {
 
 variable subnet_names {
   description = "Enter client ID"
-  default     = ""
+  default     = "mgmt, untrust, trust"
 }
 
 variable "subnet_cidrs" {
   description = "Enter client ID"
-  default     = ""
+  default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
 }
 
 
