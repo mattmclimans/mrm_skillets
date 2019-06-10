@@ -17,16 +17,29 @@ resource "azurerm_resource_group" "rg" {
   location = "${var.location}"
 }
 
+locals {
+  subnet_prefixes     = "${split(" ", replace(var.subnet_cidrs, " ", ""))}"
+  subnet_names        = "${split(" ", replace(var.subnet_names, " ", ""))}"
+}
+
+output "prefixes" {
+  value = "${local.subnet_prefixes}"
+}
+output "names" {
+  value = "${local.subnet_names}"
+}
+
+/*
 module "vnet" {
   source              = "./modules/create_vnet/"
   vnet_name           = "${var.vnet_name}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
-  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
-  subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
+  subnet_prefixes     = "${split(" ", replace(var.subnet_cidrs, " ", ""))}"
+  subnet_names        = "${split(" ", replace(var.subnet_names, " ", ""))}"
 }
-/*
+
 module "vmseries" {
   source              = "./modules/create_vmseries/"
   resource_group_name = "${azurerm_resource_group.rg.name}"
