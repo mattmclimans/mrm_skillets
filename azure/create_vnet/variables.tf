@@ -71,3 +71,7 @@ variable "internal_lb_name" {
 variable "internal_lb_address" {
   default = "10.0.3.100"
 }
+
+variable "prefix" {
+  default = ""
+}

@@ -35,16 +35,23 @@ module "vmseries" {
   nsg_source_prefix   = "${var.nsg_source_prefix}"
 }
 
-resource "azurerm_lb" "internal_lb" {
-  name                = "${var.internal_lb_name}"
-  location            = "${var.location}"
+module "internal_lb" {
+  source              = "./modules/create_internal_lb/"
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  sku                 = "standard"
+  location            = "${var.location}"
+  frontend_address    = "${var.internal_lb_address}"
+  subnet_id           = "${module.vnet.vnet_subnets[3]}"
+  health_probe_port   = "22"
+}
 
-  frontend_ip_configuration {
-    name                          = "LoadBalancerFrontEnd"
-    subnet_id                     = "${module.vnet.vnet_subnets[3]}"
-    private_ip_address_allocation = "static"
-    private_ip_address            = "${var.internal_lb_address}"
+
+module "public_lb" {
+  source              = "./modules/create_public_lb/"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  location            = "${var.location}"
+  prefix              = "${var.prefix}"
+
+  "lb_port" {
+    http = ["80", "Tcp", "80"]
   }
 }
