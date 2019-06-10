@@ -8,9 +8,8 @@ variable resource_group_name {
   default     = "vnet-rg"
 }
 
-variable "nsg_name" {
-  description = "Enter client ID"
-  default     = "vmseries-nsg"
+variable "prefix" {
+  default     = ""
 }
 
 variable "nsg_source_prefix" {
@@ -19,12 +18,12 @@ variable "nsg_source_prefix" {
 }
 
 resource "azurerm_network_security_group" "data_nsg" {
-  name                = "${var.nsg_name}-data"
+  name                = "${var.prefix}nsg-data"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
 
   security_rule {
-    name                       = "${var.nsg_name}-data-inbound"
+    name                       = "${var.prefix}data-inbound"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
@@ -36,7 +35,7 @@ resource "azurerm_network_security_group" "data_nsg" {
   }
 
   security_rule {
-    name                       = "${var.nsg_name}-data-outbound"
+    name                       = "${var.prefix}data-outbound"
     priority                   = 100
     direction                  = "Outbound"
     access                     = "Allow"
@@ -49,12 +48,12 @@ resource "azurerm_network_security_group" "data_nsg" {
 }
 
 resource "azurerm_network_security_group" "mgmt_nsg" {
-  name                = "${var.nsg_name}-mgmt"
+  name                = "${var.prefix}nsg-mgmt"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
 
   security_rule {
-    name                       = "${var.nsg_name}-mgmt-inbound"
+    name                       = "${var.prefix}mgmt-inbound"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
@@ -66,7 +65,7 @@ resource "azurerm_network_security_group" "mgmt_nsg" {
   }
 
   security_rule {
-    name                       = "${var.nsg_name}-mgmt-outbound"
+    name                       = "${var.prefix}mgmt-outbound"
     priority                   = 100
     direction                  = "Outbound"
     access                     = "Allow"

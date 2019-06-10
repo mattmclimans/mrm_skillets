@@ -31,7 +31,7 @@ module "vmseries" {
   source              = "./modules/create_vmseries/"
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
-  nsg_name            = "${var.nsg_name}"
+  prefix              = "${var.prefix}"
   nsg_source_prefix   = "${var.nsg_source_prefix}"
 }
 
@@ -42,16 +42,19 @@ module "internal_lb" {
   frontend_address    = "${var.internal_lb_address}"
   subnet_id           = "${module.vnet.vnet_subnets[3]}"
   health_probe_port   = "22"
+  prefix              = "${var.prefix}"
 }
-
 
 module "public_lb" {
   source              = "./modules/create_public_lb/"
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   prefix              = "${var.prefix}"
-
+  health_probe_port   = "22"
+  public_lb_ports     = "${split(",", replace(var.public_lb_ports, " ", ""))}"
+/*
   "lb_port" {
     http = ["80", "Tcp", "80"]
   }
+*/
 }

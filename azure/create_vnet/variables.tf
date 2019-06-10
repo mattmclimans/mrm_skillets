@@ -64,14 +64,13 @@ variable "nsg_source_prefix" {
   default     = "0.0.0.0/0"
 }
 
-variable "internal_lb_name" {
-  default = "vmseries-internal-lb"
-}
 
 variable "internal_lb_address" {
   default = "10.0.3.100"
 }
-
+variable "public_lb_ports" {
+  default = "80, 443, 8080, 22"
+}
 variable "prefix" {
-  default = ""
+  default = "coolio-"
 }

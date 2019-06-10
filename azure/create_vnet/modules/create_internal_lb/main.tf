@@ -7,10 +7,6 @@ variable "location" {
   description = "The location/region where the core network will be created. The full list of Azure regions can be found at https://azure.microsoft.com/regions"
 }
 
-variable "internal_lb_name" {
-  default = "vmseries-internal-lb"
-}
-
 variable "frontend_address" {
   default = "10.0.3.100"
 }
@@ -24,9 +20,13 @@ variable "health_probe_port" {
 variable "rule_name" {
   default = "HA-Ports"
 }
+variable "prefix" {
+  description = "(Required) Default prefix to use with your resource names."
+  default     = ""
+}
 
 resource "azurerm_lb" "internal_lb" {
-  name                = "${var.internal_lb_name}"
+  name                = "${var.prefix}internal-lb"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
   sku                 = "standard"
@@ -39,13 +39,13 @@ resource "azurerm_lb" "internal_lb" {
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "internal_lb_backend" {
+resource "azurerm_lb_backend_address_pool" "internal_lb" {
   name                = "LoadBalancerBackendPool"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.internal_lb.id}"
 }
 
-resource "azurerm_lb_rule" "internal_lb_rule" {
+resource "azurerm_lb_rule" "internal_lb" {
   name                           = "${var.rule_name}"
   resource_group_name            = "${var.resource_group_name}"
   loadbalancer_id                = "${azurerm_lb.internal_lb.id}"
@@ -53,12 +53,12 @@ resource "azurerm_lb_rule" "internal_lb_rule" {
   frontend_port                  = 0
   backend_port                   = 0
   frontend_ip_configuration_name = "LoadBalancerFrontEnd"
-  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.internal_lb_backend.id}"
-  probe_id                       = "${azurerm_lb_probe.internal_lb_probe.id}"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.internal_lb.id}"
+  probe_id                       = "${azurerm_lb_probe.internal_lb.id}"
   enable_floating_ip             = true
 }
 
-resource "azurerm_lb_probe" "internal_lb_probe" {
+resource "azurerm_lb_probe" "internal_lb" {
   name                = "HealthProbe"
   resource_group_name = "${var.resource_group_name}"
   loadbalancer_id     = "${azurerm_lb.internal_lb.id}"

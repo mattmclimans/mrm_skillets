@@ -73,10 +73,6 @@ variables:
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
-    - name: internal_lb_name
-      description: Internal Load Balancer Name
-      default: "0.0.0.0/0"
-      type_hint: text
     - name: internal_lb_address
       description: Internal Load Balancer Address
       default: "10.0.3.100"
