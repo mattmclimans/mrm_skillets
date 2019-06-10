@@ -26,7 +26,7 @@ module "vnet" {
   subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
   subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
-
+/*
 module "vmseries" {
   source              = "./modules/create_vmseries/"
   resource_group_name = "${azurerm_resource_group.rg.name}"
@@ -52,9 +52,5 @@ module "public_lb" {
   prefix              = "${var.prefix}"
   health_probe_port   = "22"
   public_lb_ports     = "${split(",", replace(var.public_lb_ports, " ", ""))}"
-/*
-  "lb_port" {
-    http = ["80", "Tcp", "80"]
-  }
-*/
 }
+*/

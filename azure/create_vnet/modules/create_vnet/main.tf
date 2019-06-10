@@ -26,11 +26,13 @@ variable "dns_servers" {
 
 variable "subnet_prefixes" {
   description = "The address prefix to use for the subnet."
+  type = "list"
   default     = ["10.0.1.0/24"]
 }
 
 variable "subnet_names" {
   description = "A list of public subnets inside the vNet."
+  type = "list"
   default     = ["subnet1"]
 }
 
@@ -54,10 +56,10 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "${var.subnet_names[count.index]}"
+  name                 = "${element(var.subnet_names, count.index)}"
   virtual_network_name = "${azurerm_virtual_network.vnet.name}"
   resource_group_name  = "${var.resource_group_name}"
-  address_prefix       = "${var.subnet_prefixes[count.index]}"
+  address_prefix       = "${element(var.subnet_prefixes, count.index)}"
   count                = "${length(var.subnet_names)}"
 }
 
@@ -80,8 +82,10 @@ output "vnet_address_space" {
   description = "The address space of the newly created vNet"
   value       = "${azurerm_virtual_network.vnet.address_space}"
 }
+/*
 
 output "vnet_subnets" {
   description = "The ids of subnets created inside the newl vNet"
   value       = "${azurerm_subnet.subnet.*.id}"
 }
+*/
