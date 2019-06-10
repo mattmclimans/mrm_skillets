@@ -59,8 +59,8 @@ variables:
       type_hint: text
     - name: subnet_names
       description: Subnet Names
-      default: {"mgmt-subnet, untrust-subnet, trust-subnet, lb-subnet"}
-      type_hint: list
+      default: {"mgmt, untrust, trust, lb"}
+      type_hint: text
     - name: subnet_cidrs
       description: Subnet CIDRs
       default: "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24"
