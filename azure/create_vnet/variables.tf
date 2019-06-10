@@ -49,6 +49,11 @@ variable subnet_names {
   default     = "mgmt, untrust, trust"
 }
 
+variable "subnet_cidrs" {
+  description = "Enter client ID"
+  default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
+}
+
 
 
 variable "nsg_source_prefix" {
