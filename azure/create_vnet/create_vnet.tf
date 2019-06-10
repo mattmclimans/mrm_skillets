@@ -10,21 +10,14 @@ provider "azurerm" {
 
 locals {
     subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
-  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
 
 }
 
 output "SUBNET-NAME-LIST" {
   value = "${local.subnet_names}"
 }
-output "SUBNET-PREFIX-LIST" {
-  value = "${local.subnet_prefixes}"
-}
 output "SUBNET-NAME-INDEX" {
   value = "${local.subnet_names[1]}"
-}
-output "SUBNET-PREFIX-INDEX" {
-  value = "${local.subnet_prefixes[2]}"
 }
 
 
