@@ -54,23 +54,20 @@ variable "subnet_cidrs" {
   default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24"
 }
 
-variable "nsg_name" {
-  description = "Enter client ID"
-  default     = "vmseries-nsg"
-}
+
 
 variable "nsg_source_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
-  default     = "0.0.0.0/0"
+  default     = ""
 }
 
 
 variable "internal_lb_address" {
-  default = "10.0.3.100"
+  default = ""
 }
 variable "public_lb_ports" {
-  default = "80, 443, 8080, 22"
+  default = ""
 }
 variable "prefix" {
-  default = "coolio-"
+  default = ""
 }
