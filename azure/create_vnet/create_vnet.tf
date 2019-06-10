@@ -26,8 +26,8 @@ module "vnet" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
-  subnet_prefixes     = "${split(" ", replace(var.subnet_cidrs, " ", ""))}"
-  subnet_names        = "${split(" ", replace(var.subnet_names, " ", ""))}"
+  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
+  subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
 }
 
 module "vmseries" {

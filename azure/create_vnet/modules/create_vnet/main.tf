@@ -63,6 +63,23 @@ resource "azurerm_subnet" "subnet" {
   count                = "${length(var.subnet_names)}"
 }
 
+
+
+
+
+resource "azurerm_network_interface" "vm_nic" {
+  name                = "nic"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+
+  ip_configuration {
+    name                          = "privatenic"
+    subnet_id                     = "${azurerm_subnet.subnet.id[0]}"
+    private_ip_address_allocation = "dynamic"
+  }
+}
+
+
 output "vnet_id" {
   description = "The id of the newly created vNet"
   value       = "${azurerm_virtual_network.vnet.id}"

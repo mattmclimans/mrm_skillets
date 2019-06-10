@@ -76,3 +76,5 @@ resource "azurerm_network_security_group" "mgmt_nsg" {
     destination_address_prefix = "*"
   }
 }
+
+
