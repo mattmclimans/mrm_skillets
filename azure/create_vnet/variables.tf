@@ -28,31 +28,40 @@ variable tenant_id {
 #************************************************************************************
 variable region {
   description = "Enter a region"
-  default     = ""
+  default     = "eastus"
 }
 
 variable resource_group {
   description = "Enter a resource group"
-  default     = ""
+  default     = "vnet-rg"
 }
 
 variable vnet_name {
   description = "Enter VNET name"
-  default     = ""
+  default     = "vmseries-vnet"
 }
 
 variable vnet_cidr {
   description = "Enter VNET name"
-  default     = ""
+  default     = "10.0.0.0/16"
 }
 
 variable subnet_names {
   description = "Enter client ID"
-  default     = ""
+  default     = "mgmt-subnet, untrust-subnet, trust-subnet"
 }
 
 variable "subnet_cidrs" {
   description = "Enter client ID"
-  default = ""
+  default = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
 }
 
+variable "nsg_name" {
+  description = "Enter client ID"
+  default = "vmseries-nsg"
+}
+
+variable "nsg_source_prefix" {
+  description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
+  default = "0.0.0.0/0"
+}
