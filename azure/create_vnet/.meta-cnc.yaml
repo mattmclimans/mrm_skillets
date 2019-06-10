@@ -26,11 +26,11 @@ labels:
 # Variable names MUST match the names of the defined terraform variables
 variables:
     - name: subscription_id
-      description: Azure Client Secret
+      description: Azure Subscription ID
       default: client_secret
       type_hint: text
     - name: client_id
-      description: Azure Client Secret
+      description: Azure Client ID
       default: client_id
       type_hint: text
     - name: client_secret
@@ -38,7 +38,7 @@ variables:
       default: client_secret
       type_hint: text
     - name: tenant_id
-      description: Azure Client Secret
+      description: Azure Tenant ID
       default: tenant_id
       type_hint: text
     - name: region
@@ -59,7 +59,7 @@ variables:
       type_hint: text
     - name: subnet_names
       description: Subnet Names
-      default: '"mgmt-subnet, untrust-subnet, trust-subnet"'
+      default: "mgmt-subnet, untrust-subnet, trust-subnet"
       type_hint: text
     - name: subnet_cidrs
       description: Subnet CIDRs
