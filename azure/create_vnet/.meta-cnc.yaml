@@ -59,11 +59,11 @@ variables:
       type_hint: text
     - name: subnet_names
       description: Subnet Names
-      default: "mgmt-subnet, untrust-subnet, trust-subnet"
+      default: "mgmt-subnet, untrust-subnet, trust-subnet, lb-subnet"
       type_hint: text
     - name: subnet_cidrs
       description: Subnet CIDRs
-      default: "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
+      default: "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24"
       type_hint: text
     - name: nsg_name
       description: Subnet CIDRs
@@ -72,4 +72,12 @@ variables:
     - name: nsg_source_prefix
       description: Subnet CIDRs
       default: "0.0.0.0/0"
+      type_hint: text
+    - name: internal_lb_name
+      description: Internal Load Balancer Name
+      default: "0.0.0.0/0"
+      type_hint: text
+    - name: internal_lb_address
+      description: Internal Load Balancer Name
+      default: "10.0.3.100"
       type_hint: text

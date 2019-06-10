@@ -6,7 +6,6 @@ variable subscription_id {
   default     = ""
 }
 
-
 variable client_id {
   description = "Enter client ID"
   default     = ""
@@ -16,7 +15,6 @@ variable client_secret {
   description = "Enter client ID"
   default     = ""
 }
-
 
 variable tenant_id {
   description = "Enter client ID"
@@ -48,20 +46,28 @@ variable vnet_cidr {
 
 variable subnet_names {
   description = "Enter client ID"
-  default     = "mgmt-subnet, untrust-subnet, trust-subnet"
+  default     = "mgmt-subnet, untrust-subnet, trust-subnet, lb-subnet"
 }
 
 variable "subnet_cidrs" {
   description = "Enter client ID"
-  default = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
+  default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24"
 }
 
 variable "nsg_name" {
   description = "Enter client ID"
-  default = "vmseries-nsg"
+  default     = "vmseries-nsg"
 }
 
 variable "nsg_source_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
-  default = "0.0.0.0/0"
+  default     = "0.0.0.0/0"
+}
+
+variable "internal_lb_name" {
+  default = "vmseries-internal-lb"
+}
+
+variable "internal_lb_address" {
+  default = "10.0.3.100"
 }

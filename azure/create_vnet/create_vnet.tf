@@ -7,6 +7,7 @@ provider "azurerm" {
   client_secret   = "${var.client_secret}"
   tenant_id       = "${var.tenant_id}"
 }
+
 #************************************************************************************
 # CREATE SECURITY VPC & SUBNETS
 #************************************************************************************
@@ -17,9 +18,9 @@ resource "azurerm_resource_group" "rg" {
 }
 
 module "vnet" {
-  source              = "Azure/network/azurerm"
+  source              = "./modules/create_vnet/"
   vnet_name           = "${var.vnet_name}"
-  resource_group_name = "${var.resource_group}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
   subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
@@ -27,9 +28,23 @@ module "vnet" {
 }
 
 module "vmseries" {
-  source            = "./modules/create_vmseries/"
-  resource_group    = "${azurerm_resource_group.rg.name}"
-  location          = "${var.location}"
-  nsg_name          = "${var.nsg_name}"
-  nsg_source_prefix = "${var.nsg_source_prefix}"
+  source              = "./modules/create_vmseries/"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  location            = "${var.location}"
+  nsg_name            = "${var.nsg_name}"
+  nsg_source_prefix   = "${var.nsg_source_prefix}"
+}
+
+resource "azurerm_lb" "internal_lb" {
+  name                = "${var.internal_lb_name}"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  sku                 = "standard"
+
+  frontend_ip_configuration {
+    name                          = "LoadBalancerFrontEnd"
+    subnet_id                     = "${module.vnet.vnet_subnets[3]}"
+    private_ip_address_allocation = "static"
+    private_ip_address            = "${var.internal_lb_address}"
+  }
 }
