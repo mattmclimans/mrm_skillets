@@ -105,7 +105,7 @@ resource "azurerm_network_interface" "nic_dynamic" {
   ]
 }
 
-resource "azurerm_network_interface" "nic" {
+resource "azurerm_network_interface" "nic_static" {
   count               = "${azurerm_network_interface.nic_dynamic.count}"//"${length(var.fw_names) * length(var.subnet_names)}" //"${length(var.fw_names)}"  
   name                = "${azurerm_network_interface.nic_dynamic.*.name[count.index]}"//"${var.fw_names[count.index / length(var.subnet_names)]}-nic${count.index}"
   location            = "${var.location}"
