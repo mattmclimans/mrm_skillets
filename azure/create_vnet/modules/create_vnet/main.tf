@@ -123,40 +123,6 @@ resource "azurerm_network_interface" "nic_static" {
 }
 
 
-/*
-
-resource "azurerm_network_interface" "mgmt_nic_dynamic" {
-  count               = "${length(var.fw_names)}"
-  name                = "${var.fw_names[count.index]}-nic0"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.0.id}"
-    private_ip_address_allocation = "dynamic"
-  }
-}
-
-resource "azurerm_network_interface" "mgmt_nic" {
-  count               = "${length(var.fw_names)}"
-  name                = "${azurerm_network_interface.mgmt_nic_dynamic.*.name[count.index]}"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.0.id}"
-    private_ip_address_allocation = "static"
-    private_ip_address            = "${azurerm_network_interface.mgmt_nic_dynamic.*.private_ip_address[count.index]}"
-  }
-  depends_on = [
-  //    "${azurerm_network_interface.mgmt_nic_dynamic[count.index]}"
-  ]
-}
-
-*/
-
 output "vnet_id" {
   description = "The id of the newly created vNet"
   value       = "${azurerm_virtual_network.vnet.id}"
