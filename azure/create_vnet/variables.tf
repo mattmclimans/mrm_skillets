@@ -58,16 +58,16 @@ variable "subnet_cidrs" {
 
 variable "nsg_source_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
-  default     = ""
+  default     = "0.0.0.0/0"
 }
 
 
 variable "internal_lb_address" {
-  default = ""
+  default = "10.0.2.100"
 }
 variable "public_lb_ports" {
-  default = ""
+  default = "80, 443, 22"
 }
 variable "prefix" {
-  default = ""
+  default = "matt-"
 }
