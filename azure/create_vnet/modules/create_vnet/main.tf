@@ -48,7 +48,7 @@ variable "tags" {
 
 variable "fw_names" {
     type = "list"
-    default = ["vmseries-fw1", "vmseries-fw2"]
+    default = ["vmseries-fw1"]
 }
 
 variable "prefix" {
@@ -56,15 +56,6 @@ variable "prefix" {
   default     = ""
 }
 
-variable "nic_names" {
-    type = "list"
-    default = ["nic0", "nic1", "nic2"]
-}
-
-
-locals {
-    nic_count = "${length(var.fw_names) * length(var.subnet_names)}" 
-}
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.vnet_name}"

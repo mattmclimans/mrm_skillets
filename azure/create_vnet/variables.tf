@@ -54,6 +54,11 @@ variable "subnet_cidrs" {
   default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
 }
 
+variable "fw_names" {
+  description = "Enter firewall names"
+  default     = "vmseries-fw1, vmseries-fw2"
+}
+
 
 
 variable "nsg_source_prefix" {

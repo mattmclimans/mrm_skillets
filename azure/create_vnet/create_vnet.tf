@@ -13,35 +13,27 @@ provider "azurerm" {
 #************************************************************************************
 
 
-/*
+
 resource "azurerm_resource_group" "rg" {
   name     = "mrm-rg"
   location = "${var.location}"
 }
-*/
-
-data "azurerm_resource_group" "rg" {
-  name     = "test-rg"
- // location = "${var.location}"
-}
-
 
 module "vnet" {
   source              = "./modules/create_vnet/"
   vnet_name           = "${var.vnet_name}"
-  resource_group_name = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
   subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
   subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
+  fw_names            = "${split(",", replace(var.fw_names, " ", ""))}"
   prefix              = "${var.prefix}"
 }
 
-
-/*
 module "vmseries" {
   source              = "./modules/create_vmseries/"
-  resource_group_name = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   prefix              = "${var.prefix}"
   nsg_source_prefix   = "${var.nsg_source_prefix}"
@@ -49,7 +41,7 @@ module "vmseries" {
 
 module "internal_lb" {
   source              = "./modules/create_internal_lb/"
-  resource_group_name = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   frontend_address    = "${var.internal_lb_address}"
   subnet_id           = "${module.vnet.vnet_subnets[2]}"
@@ -59,10 +51,9 @@ module "internal_lb" {
 
 module "public_lb" {
   source              = "./modules/create_public_lb/"
-  resource_group_name = "${data.azurerm_resource_group.rg.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   prefix              = "${var.prefix}"
   health_probe_port   = "22"
   public_lb_ports     = "${split(",", replace(var.public_lb_ports, " ", ""))}"
 }
-*/

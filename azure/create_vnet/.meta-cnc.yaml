@@ -77,6 +77,10 @@ variables:
       description: Public Load Balancer Allowed Ports
       default: 80,443,22,3389
       type_hint: text
+    - name: fw_names
+      description: Prefix to append to created resources
+      default: "vmseries-fw1,vmseries-fw2"
+      type_hint: text
     - name: prefix
       description: Prefix to append to created resources
       default: "vmseries-"
