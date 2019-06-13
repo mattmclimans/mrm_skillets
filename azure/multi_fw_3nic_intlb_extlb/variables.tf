@@ -102,3 +102,7 @@ variable "create_public_lb" {
 variable "create_internal_lb" {
   default = true
 }
+
+variable "fw_license" {
+  default = "bundle1"
+}

@@ -29,7 +29,7 @@ variable "panos_version" {
   default = "8.1.0"
 }
 
-variable "fw_bundle" {
+variable "fw_license" {
   default = "byol"
 }
 
@@ -287,7 +287,7 @@ resource "azurerm_network_interface" "nic2" {
   }
 }
 
-/*
+
 #************************************************************************************
 # CREATE VM-SERIES
 #************************************************************************************
@@ -311,14 +311,14 @@ resource "azurerm_virtual_machine" "vmseries" {
     disable_password_authentication = false
   }
   plan {
-    name      = "${var.fw_bundle}"
+    name      = "${var.fw_license}"
     publisher = "paloaltonetworks"
     product   = "vmseries1"
   }
   storage_image_reference {
     publisher = "paloaltonetworks"
     offer     = "vmseries1"
-    sku       = "${var.fw_bundle}"
+    sku       = "${var.fw_license}"
     version   = "${var.panos_version}"
   }
   storage_os_disk {
@@ -337,7 +337,7 @@ resource "azurerm_virtual_machine" "vmseries" {
 
 }
 
-*/
+
 
 #************************************************************************************
 # CREATE PUBLIC_LB CONDITIONAL
