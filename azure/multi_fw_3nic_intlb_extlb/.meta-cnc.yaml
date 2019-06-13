@@ -45,7 +45,7 @@ variables:
       description: Location
       default: eastus
       type_hint: text
-    - name: resource_group
+    - name: resource_group_name
       description: Resource Group
       default: vmseries-rg
       type_hint: text
