@@ -200,7 +200,7 @@ resource "azurerm_network_interface" "nic0_dynamic" {
   name                      = "${var.prefix}${local.fw_names[count.index]}-nic0"
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
-  network_security_group_id = "${azurerm_network_security_group.nic0.id}"
+
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -214,7 +214,6 @@ resource "azurerm_network_interface" "nic1_dynamic" {
   name                      = "${var.prefix}${local.fw_names[count.index]}-nic1"
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
-  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -228,7 +227,6 @@ resource "azurerm_network_interface" "nic2_dynamic" {
   name                      = "${var.prefix}${local.fw_names[count.index]}-nic2"
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
-  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -246,6 +244,7 @@ resource "azurerm_network_interface" "nic0" {
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   enable_ip_forwarding = true
+  network_security_group_id = "${azurerm_network_security_group.nic0.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -262,6 +261,7 @@ resource "azurerm_network_interface" "nic1" {
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   enable_ip_forwarding = true
+  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -278,6 +278,7 @@ resource "azurerm_network_interface" "nic2" {
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   enable_ip_forwarding = true
+  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
