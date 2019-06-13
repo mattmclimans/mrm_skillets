@@ -45,11 +45,9 @@ variable "fw_subnet_ids" {
   type = "list"
 }
 
-variable "apply_pip_to_management" {
-}
+variable "apply_pip_to_management" {}
 
-variable "apply_pip_to_dataplane1" {
-}
+variable "apply_pip_to_dataplane1" {}
 
 variable "public_lb_ports" {
   default = "80, 443, 22"
@@ -78,7 +76,6 @@ variable "protocol" {
 variable "lb_health_probe_port" {
   default = "22"
 }
-
 
 variable "sku" {
   description = "SKU for Public IP and Load Balancer"
@@ -152,8 +149,8 @@ resource "azurerm_network_security_group" "nic0" {
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_ranges         = ["*"]
-    destination_port_ranges     = ["443", "22"]
+    source_port_range          = "*"
+    destination_port_ranges    = ["443", "22"]
     source_address_prefix      = "${var.fw_nsg_source_prefix}"
     destination_address_prefix = "*"
   }
@@ -184,11 +181,10 @@ resource "azurerm_public_ip" "nic1" {
 # CREATE NICS - DYNAMIC
 #************************************************************************************
 resource "azurerm_network_interface" "nic0_dynamic" {
-  count                     = "${length(local.fw_names)}"
-  name                      = "${var.prefix}${local.fw_names[count.index]}-nic0"
-  location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group_name}"
-
+  count               = "${length(local.fw_names)}"
+  name                = "${var.prefix}${local.fw_names[count.index]}-nic0"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -198,10 +194,10 @@ resource "azurerm_network_interface" "nic0_dynamic" {
 }
 
 resource "azurerm_network_interface" "nic1_dynamic" {
-  count                     = "${length(local.fw_names)}"
-  name                      = "${var.prefix}${local.fw_names[count.index]}-nic1"
-  location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group_name}"
+  count               = "${length(local.fw_names)}"
+  name                = "${var.prefix}${local.fw_names[count.index]}-nic1"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -211,10 +207,10 @@ resource "azurerm_network_interface" "nic1_dynamic" {
 }
 
 resource "azurerm_network_interface" "nic2_dynamic" {
-  count                     = "${length(local.fw_names)}"
-  name                      = "${var.prefix}${local.fw_names[count.index]}-nic2"
-  location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group_name}"
+  count               = "${length(local.fw_names)}"
+  name                = "${var.prefix}${local.fw_names[count.index]}-nic2"
+  location            = "${var.location}"
+  resource_group_name = "${var.resource_group_name}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -227,11 +223,11 @@ resource "azurerm_network_interface" "nic2_dynamic" {
 # CONVERT NICS TO STATIC 
 #************************************************************************************
 resource "azurerm_network_interface" "nic0" {
-  count                = "${azurerm_network_interface.nic0_dynamic.count}"
-  name                 = "${azurerm_network_interface.nic0_dynamic.*.name[count.index]}"
-  location             = "${var.location}"
-  resource_group_name  = "${var.resource_group_name}"
-  enable_ip_forwarding = true
+  count                     = "${azurerm_network_interface.nic0_dynamic.count}"
+  name                      = "${azurerm_network_interface.nic0_dynamic.*.name[count.index]}"
+  location                  = "${var.location}"
+  resource_group_name       = "${var.resource_group_name}"
+  enable_ip_forwarding      = true
   network_security_group_id = "${azurerm_network_security_group.nic0.id}"
 
   ip_configuration {
@@ -244,11 +240,11 @@ resource "azurerm_network_interface" "nic0" {
 }
 
 resource "azurerm_network_interface" "nic1" {
-  count                = "${azurerm_network_interface.nic1_dynamic.count}"
-  name                 = "${azurerm_network_interface.nic1_dynamic.*.name[count.index]}"
-  location             = "${var.location}"
-  resource_group_name  = "${var.resource_group_name}"
-  enable_ip_forwarding = true
+  count                     = "${azurerm_network_interface.nic1_dynamic.count}"
+  name                      = "${azurerm_network_interface.nic1_dynamic.*.name[count.index]}"
+  location                  = "${var.location}"
+  resource_group_name       = "${var.resource_group_name}"
+  enable_ip_forwarding      = true
   network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
@@ -261,11 +257,11 @@ resource "azurerm_network_interface" "nic1" {
 }
 
 resource "azurerm_network_interface" "nic2" {
-  count                = "${azurerm_network_interface.nic2_dynamic.count}"
-  name                 = "${azurerm_network_interface.nic2_dynamic.*.name[count.index]}"
-  location             = "${var.location}"
-  resource_group_name  = "${var.resource_group_name}"
-  enable_ip_forwarding = true
+  count                     = "${azurerm_network_interface.nic2_dynamic.count}"
+  name                      = "${azurerm_network_interface.nic2_dynamic.*.name[count.index]}"
+  location                  = "${var.location}"
+  resource_group_name       = "${var.resource_group_name}"
+  enable_ip_forwarding      = true
   network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
@@ -276,33 +272,34 @@ resource "azurerm_network_interface" "nic2" {
   }
 }
 
-
 #************************************************************************************
 # CREATE VM-SERIES
 #************************************************************************************
 resource "azurerm_virtual_machine" "vmseries" {
-  count               = "${length(local.fw_names)}"
-  name                = "${local.fw_names[count.index]}"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-  vm_size             = "${var.fw_size}"
+  count                        = "${length(local.fw_names)}"
+  name                         = "${local.fw_names[count.index]}"
+  location                     = "${var.location}"
+  resource_group_name          = "${var.resource_group_name}"
+  vm_size                      = "${var.fw_size}"
   primary_network_interface_id = "${element(azurerm_network_interface.nic0.*.id, count.index)}"
-  
+
   network_interface_ids = [
     "${element(azurerm_network_interface.nic0.*.id, count.index)}",
     "${element(azurerm_network_interface.nic1.*.id, count.index)}",
-    "${element(azurerm_network_interface.nic2.*.id, count.index)}"
+    "${element(azurerm_network_interface.nic2.*.id, count.index)}",
   ]
 
   #  availability_set_id = "${azurerm_availability_set.fwavset.id}"
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
   plan {
     name      = "${var.fw_license}"
     publisher = "paloaltonetworks"
     product   = "vmseries1"
   }
+
   storage_image_reference {
     publisher = "paloaltonetworks"
     offer     = "vmseries1"
@@ -316,6 +313,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
+
   os_profile {
     computer_name  = "${local.fw_names[count.index]}-osprofile"
     admin_username = "${var.fw_username}"
@@ -323,10 +321,7 @@ resource "azurerm_virtual_machine" "vmseries" {
 
     #   custom_data    = "${join(",", list("storage-account=${var.BootstrapStorageAccount}", "access-key=${var.StorageAccountAccessKey}", "file-share=${var.StorageAccountFileShare}", "share-directory=${var.StorageAccountFileShareDirectory}"))}"
   }
-
 }
-
-
 
 #************************************************************************************
 # CREATE PUBLIC_LB CONDITIONAL
