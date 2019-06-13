@@ -58,11 +58,11 @@ variables:
       default: 10.0.0.0/16
       type_hint: text
     - name: subnet_names
-      description: Subnet Names
+      description: Subnet Names (3 are required)
       default: "mgmt,untrust,trust"
       type: text
-    - name: subnet_cidrs
-      description: Subnet CIDRs
+    - name: subnet_prefixes
+      description: Subnet Prefixes (3 are required)
       default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
       type_hint: text
     - name: nsg_source_prefix
