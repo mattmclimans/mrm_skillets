@@ -152,7 +152,7 @@ resource "azurerm_network_security_group" "nic0" {
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
-    source_port_ranges         = "*"
+    source_port_ranges         = ["*"]
     destination_port_ranges     = ["443", "22"]
     source_address_prefix      = "${var.fw_nsg_source_prefix}"
     destination_address_prefix = "*"
