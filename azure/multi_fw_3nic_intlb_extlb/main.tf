@@ -23,8 +23,8 @@ module "vnet" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
-  subnet_prefixes     = "${var.subnet_prefixes}"
   subnet_names        = "${var.subnet_names}"
+  subnet_prefixes     = "${var.subnet_prefixes}"
 }
 
 
@@ -35,8 +35,8 @@ module "vmseries" {
   fw_names                = "${var.fw_names}"
   fw_username             = "${var.fw_username}"
   fw_password             = "${var.fw_password}"
-  fw_subnet_ids           = "${module.vnet.vnet_subnets}"
   fw_nsg_source_prefix    = "${var.fw_nsg_source_prefix}"
+  fw_subnet_ids           = "${module.vnet.vnet_subnets}"
   apply_pip_to_management = "${var.apply_pip_to_management}"
   apply_pip_to_dataplane1 = "${var.apply_pip_to_dataplane1}"
   

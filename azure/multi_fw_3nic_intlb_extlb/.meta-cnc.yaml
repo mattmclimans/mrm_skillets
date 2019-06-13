@@ -1,13 +1,13 @@
 # This is an example .meta-cnc.yaml file. This will allow Panhandler to consume this terraform project
 
 # this is the name of this skillet, should be unique within a given repository
-name: azure_create_vnet
+name: azure_multifw_3nic_intlb_extlb
 
 # label should be a human readable label that conveys what this skillet will do 
-label: Azure Create VNET
+label: Azure Multi-FW
 
 # description is a longer more informative version of a label
-description: Creates a single Azure VNET in a new Resource Group
+description: Creates multiple firewalls with optional public & internal load balancers.
 
 # type instructs Panhandler how to consume this skillet
 type: terraform
@@ -58,11 +58,11 @@ variables:
       default: 10.0.0.0/16
       type_hint: text
     - name: subnet_names
-      description: Subnet Names
+      description: Subnet Names (must be 3 subnets)
       default: mgmt,untrust,trust
       type: text
     - name: subnet_cidrs
-      description: Subnet CIDRs
+      description: Subnet CIDRs (must be 3 subnets)
       default: 10.0.0.0/24,10.0.1.0/24,10.0.2.0/24
       type_hint: text
     - name: nsg_source_prefix
@@ -71,18 +71,18 @@ variables:
       type_hint: text
     - name: internal_lb_address
       description: Internal Load Balancer Address
-      default: "10.0.3.100"
+      default: "10.0.2.100"
       type_hint: text
     - name: public_lb_ports
       description: Public Load Balancer Allowed Ports
       default: 80,443,22,3389
       type_hint: text
     - name: fw_names
-      description: Prefix to append to created resources
+      description: VM-Series machine names (every name entered, creates a new VM)
       default: "vmseries-fw1,vmseries-fw2"
       type_hint: text
     - name: prefix
-      description: Prefix to append to created resources
-      default: "vmseries-"
+      description: Appends a prefix to all newly created resources
+      default: ""
       type_hint: text
     
