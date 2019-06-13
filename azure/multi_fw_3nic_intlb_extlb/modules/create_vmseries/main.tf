@@ -232,7 +232,7 @@ resource "azurerm_network_interface" "nic0" {
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   enable_ip_forwarding = true
-  network_security_group_id = "${azurerm_network_security_group.nico.id}"
+  network_security_group_id = "${azurerm_network_security_group.nic0.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
