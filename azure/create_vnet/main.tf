@@ -12,10 +12,8 @@ provider "azurerm" {
 # CREATE SECURITY VPC & SUBNETS
 #************************************************************************************
 
-
-
 resource "azurerm_resource_group" "rg" {
-  name     = "mrm-rg"
+  name     = "${var.resource_group_name}"
   location = "${var.location}"
 }
 
@@ -25,35 +23,41 @@ module "vnet" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   location            = "${var.location}"
   address_space       = "${var.vnet_cidr}"
-  subnet_prefixes     = "${split(",", replace(var.subnet_cidrs, " ", ""))}"
-  subnet_names        = "${split(",", replace(var.subnet_names, " ", ""))}"
-  fw_names            = "${split(",", replace(var.fw_names, " ", ""))}"
-  prefix              = "${var.prefix}"
+  subnet_prefixes     = "${var.subnet_prefixes}"
+  subnet_names        = "${var.subnet_names}"
 }
+
 
 module "vmseries" {
-  source              = "./modules/create_vmseries/"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-  location            = "${var.location}"
-  prefix              = "${var.prefix}"
-  nsg_source_prefix   = "${var.nsg_source_prefix}"
+  source                  = "./modules/create_vmseries/"
+  resource_group_name     = "${azurerm_resource_group.rg.name}"
+  location                = "${var.location}"
+  fw_names                = "${var.fw_names}"
+  fw_username             = "${var.fw_username}"
+  fw_password             = "${var.fw_password}"
+  fw_subnet_ids           = "${module.vnet.vnet_subnets}"
+  fw_nsg_source_prefix    = "${var.fw_nsg_source_prefix}"
+  apply_pip_to_management = "${var.apply_pip_to_management}"
+  apply_pip_to_dataplane1 = "${var.apply_pip_to_dataplane1}"
+  
+  
+  create_public_lb        = "${var.create_public_lb}"
+  public_lb_ports         = "${var.public_lb_ports}"
+
+  create_internal_lb  = "${var.create_internal_lb}"
+  internal_lb_address    = "${var.internal_lb_address}"
+  internal_lb_subnet_id           = "${module.vnet.vnet_subnets[2]}"
+  
+ // prefix                  = "${var.prefix}"
+
 }
 
-module "internal_lb" {
-  source              = "./modules/create_internal_lb/"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-  location            = "${var.location}"
-  frontend_address    = "${var.internal_lb_address}"
-  subnet_id           = "${module.vnet.vnet_subnets[3]}"
-  health_probe_port   = "22"
-  prefix              = "${var.prefix}"
-}
 
-module "public_lb" {
-  source              = "./modules/create_public_lb/"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-  location            = "${var.location}"
-  prefix              = "${var.prefix}"
-  health_probe_port   = "22"
-  public_lb_ports     = "${split(",", replace(var.public_lb_ports, " ", ""))}"
-}
+/*
+
+internal_lb_address
+fw_mgmt_ips
+fw_untrust_ips
+
+
+*/

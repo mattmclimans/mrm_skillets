@@ -29,9 +29,9 @@ variable location {
   default     = "eastus"
 }
 
-variable resource_group {
+variable resource_group_name {
   description = "Enter a resource group"
-  default     = "mrm-rg"
+  default     = "sammy-is-cool-rg"
 }
 
 variable vnet_name {
@@ -49,19 +49,26 @@ variable subnet_names {
   default     = "mgmt, untrust, trust"
 }
 
-variable "subnet_cidrs" {
+variable "subnet_prefixes" {
   description = "Enter client ID"
   default     = "10.0.0.0/24, 10.0.1.0/24, 10.0.2.0/24"
 }
 
 variable "fw_names" {
   description = "Enter firewall names"
-  default     = "vmseries-fw1, vmseries-fw2"
+  default     = "vmseries-fw1, vmseries-fw2, vmseries-fw3"
+}
+
+variable "fw_password" {
+  default     = "PanPassword123!"
+}
+
+variable "fw_username" {
+  default     = "paloalto"
 }
 
 
-
-variable "nsg_source_prefix" {
+variable "fw_nsg_source_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
   default     = "0.0.0.0/0"
 }
@@ -75,4 +82,20 @@ variable "public_lb_ports" {
 }
 variable "prefix" {
   default = "matt-"
+}
+
+
+variable "apply_pip_to_management" {
+  default = true 
+}
+
+variable "apply_pip_to_dataplane1" {
+  default = true 
+}
+
+variable "create_public_lb" {
+  default = true
+}
+variable "create_internal_lb" {
+  default = true
 }
