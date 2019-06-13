@@ -115,7 +115,7 @@ resource "azurerm_network_security_group" "default" {
 
   security_rule {
     name                       = "${var.prefix}data-inbound"
-    priority                   = 100
+    priority                   = 1000
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "*"
@@ -127,7 +127,7 @@ resource "azurerm_network_security_group" "default" {
 
   security_rule {
     name                       = "data-outbound"
-    priority                   = 100
+    priority                   = 1000
     direction                  = "Outbound"
     access                     = "Allow"
     protocol                   = "*"
@@ -145,7 +145,7 @@ resource "azurerm_network_security_group" "nic0" {
 
   security_rule {
     name                       = "mgmt-inbound"
-    priority                   = 100
+    priority                   = 1000
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
