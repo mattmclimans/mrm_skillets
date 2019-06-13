@@ -35,6 +35,7 @@ module "vmseries" {
   fw_names                = "${var.fw_names}"
   fw_username             = "${var.fw_username}"
   fw_password             = "${var.fw_password}"
+  fw_panos_version        = "${var.fw_panos_version}"
   fw_license              = "${var.fw_license}"
   fw_nsg_source_prefix    = "${var.fw_nsg_source_prefix}"
   fw_subnet_ids           = "${module.vnet.vnet_subnets}"

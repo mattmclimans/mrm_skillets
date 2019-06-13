@@ -62,7 +62,7 @@ variable "subnet_prefixes" {
 
 variable "fw_names" {
   description = "Enter firewall names"
-  default     = "vmseries-fw1, vmseries-fw2"
+  default     = "vmseries-fw1,vmseries-fw2"
 }
 variable "fw_username" {
   default     = "paloalto"
@@ -70,6 +70,14 @@ variable "fw_username" {
 
 variable "fw_password" {
   default     = "PanPassword123!"
+}
+
+variable "fw_panos_version" {
+  default     = "latest"
+}
+
+variable "fw_license" {
+  default = "bundle1"
 }
 
 variable "fw_nsg_source_prefix" {
@@ -103,6 +111,3 @@ variable "create_internal_lb" {
   default = true
 }
 
-variable "fw_license" {
-  default = "bundle1"
-}

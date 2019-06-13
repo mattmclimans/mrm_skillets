@@ -25,8 +25,8 @@ variable "fw_size" {
   default = "Standard_DS3_v2"
 }
 
-variable "panos_version" {
-  default = "8.1.0"
+variable "fw_panos_version" {
+  default = "latest"
 }
 
 variable "fw_license" {
@@ -320,7 +320,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     publisher = "paloaltonetworks"
     offer     = "vmseries1"
     sku       = "${var.fw_license}"
-    version   = "${var.panos_version}"
+    version   = "${var.fw_panos_version}"
   }
   storage_os_disk {
     name              = "${local.fw_names[count.index]}-osdisk"
