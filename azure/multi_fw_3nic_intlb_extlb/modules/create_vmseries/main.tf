@@ -151,22 +151,10 @@ resource "azurerm_network_security_group" "nic0" {
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                   = "tcp"
-    source_port_ranges         = ["443", "22"]
-    destination_port_range     = "*"
+    protocol                   = "Tcp"
+    source_port_ranges         = "*"
+    destination_port_ranges     = ["443", "22"]
     source_address_prefix      = "${var.fw_nsg_source_prefix}"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                       = "mgmt-outbound"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
@@ -244,7 +232,7 @@ resource "azurerm_network_interface" "nic0" {
   location             = "${var.location}"
   resource_group_name  = "${var.resource_group_name}"
   enable_ip_forwarding = true
-  network_security_group_id = "${azurerm_network_security_group.nic0.id}"
+  network_security_group_id = "${azurerm_network_security_group.nico.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -321,7 +309,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     sku       = "${var.fw_license}"
     version   = "${var.fw_panos_version}"
   }
-  
+
   storage_os_disk {
     name              = "${local.fw_names[count.index]}-osdisk"
     caching           = "ReadWrite"
