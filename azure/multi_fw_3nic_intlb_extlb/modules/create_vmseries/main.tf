@@ -293,14 +293,13 @@ resource "azurerm_network_interface" "nic2" {
 # CREATE VM-SERIES
 #************************************************************************************
 resource "azurerm_virtual_machine" "vmseries" {
-  count               = "${var.prefix}${length(local.fw_names)}"
+  count               = "${length(local.fw_names)}"
   name                = "${local.fw_names[count.index]}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
   vm_size             = "${var.fw_size}"
-
   primary_network_interface_id = "${element(azurerm_network_interface.nic0.*.id, count.index)}"
-
+  
   network_interface_ids = [
     "${element(azurerm_network_interface.nic0.*.id, count.index)}",
     "${element(azurerm_network_interface.nic1.*.id, count.index)}",
@@ -322,6 +321,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     sku       = "${var.fw_license}"
     version   = "${var.fw_panos_version}"
   }
+  
   storage_os_disk {
     name              = "${local.fw_names[count.index]}-osdisk"
     caching           = "ReadWrite"
