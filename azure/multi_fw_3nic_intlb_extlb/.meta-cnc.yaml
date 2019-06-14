@@ -61,7 +61,7 @@ variables:
       description: Subnet Names - 3 required
       default: "mgmt,untrust,trust"
       type: text
-    - name: Subnet Address Spaces - 3 required
+    - name: subnet_prefixes
       description: Subnet Prefixes - 3 required
       default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
       type_hint: text
@@ -80,5 +80,28 @@ variables:
     - name: fw_names
       description: FW names (for every name entered, a new VM is created)
       default: "vmseries-fw1,vmseries-fw2"
+      type_hint: text
+    - name: fw_username
+      description: FW Username (do not use admin or root)
+      default: paloalto
+      type_hint: text
+    - name: fw_password
+      description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
+      default:
+      type_hint: text
+    - name: fw_license
+      description: FW License
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: BYOL
+         value: byol
+       - key: PAYG-Bundle1
+         value: bundle1
+       - key: PAYG-Bundle2
+         value: bundle
+    - name: prefix
+      description: Appends a prefix to all newly created resources
+      default: ""
       type_hint: text
     
