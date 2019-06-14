@@ -94,12 +94,12 @@ variables:
       default:
       type_hint: dropdown
       dd_list:
-       - key: byol
-         value: BYOL
-       - key: bundle1
-         value: PAYG-Bundle1
-       - key: bundle2
-         value: PAYG-Bundle2
+       - key: BYOL
+         value: byol
+       - key: PAYG-Bundle1
+         value: bundle1
+       - key: PAYG-Bundle2
+         value: bundle2
     - name: prefix
       description: Appends a prefix to all newly created resources
       default: ""
