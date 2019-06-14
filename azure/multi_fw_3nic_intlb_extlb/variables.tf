@@ -41,7 +41,7 @@ variable vnet_name {
   default     = "vmseries-vnet"
 }
 
-variable vnet_cidr {
+variable address_space {
   description = "VNET CIDR"
   default     = "10.0.0.0/16"
 }
