@@ -275,6 +275,7 @@ resource "azurerm_network_interface" "nic2" {
 #************************************************************************************
 # CREATE VM-SERIES
 #************************************************************************************
+/*
 resource "azurerm_virtual_machine" "vmseries" {
   count                        = "${length(local.fw_names)}"
   name                         = "${local.fw_names[count.index]}"
@@ -322,7 +323,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     #   custom_data    = "${join(",", list("storage-account=${var.BootstrapStorageAccount}", "access-key=${var.StorageAccountAccessKey}", "file-share=${var.StorageAccountFileShare}", "share-directory=${var.StorageAccountFileShareDirectory}"))}"
   }
 }
-
+*/
 #************************************************************************************
 # CREATE PUBLIC_LB CONDITIONAL
 #************************************************************************************
@@ -441,4 +442,10 @@ resource "azurerm_network_interface_backend_address_pool_association" "internal_
   network_interface_id    = "${element(azurerm_network_interface.nic2.*.id, count.index)}"
   ip_configuration_name   = "ipconfig1"
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.internal_lb.id}"
+}
+
+
+
+output "fw_nic0_pip" {
+  value = "${azurerm_public_ip.nic0.*.ip_address}"
 }

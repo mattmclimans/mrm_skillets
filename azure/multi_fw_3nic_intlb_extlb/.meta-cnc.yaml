@@ -53,34 +53,53 @@ variables:
       description: VNET Name
       default: vmseries-vnet
       type_hint: text
-    - name: vnet_cidr
-      description: VNET Prefix
+    - name: address_space
+      description: VNET Address Space
       default: 10.0.0.0/16
       type_hint: text
     - name: subnet_names
       description: Subnet Names - 3 required
       default: "mgmt,untrust,trust"
       type: text
-    - name: subnet_prefixes
+    - name: Subnet Address Spaces - 3 required
       description: Subnet Prefixes - 3 required
       default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
       type_hint: text
-    - name: nsg_source_prefix
+    - name: fw_nsg_source_prefix
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
     - name: internal_lb_address
-      description: Internal Load Balancer Address
+      description: Internal Load Balancer Address - must be in last subnet space
       default: "10.0.2.100"
       type_hint: text
     - name: public_lb_ports
-      description: Public Load Balancer Allowed Ports
+      description: Public Load Balancer Allowed Ports (for every port entered, a new rule is created)
       default: 80,443,22,3389
       type_hint: text
     - name: fw_names
-      description: VM-Series machine names (every name entered, creates a new VM)
+      description: FW names (for every name entered, a new VM is created)
       default: "vmseries-fw1,vmseries-fw2"
       type_hint: text
+    - name: fw_username
+      description: FW Username (do not use admin or root)
+      default: paloalto
+      type_hint: text
+    - name: fw_password
+      description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
+      default:
+      type_hint: text
+    - name: fw_license
+      description: FW License
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: byol
+         value: BYOL
+       - key: bundle1
+         value: PAYG-Bundle1
+       - key: bundle2
+         value: PAYG-Bundle2
     - name: prefix
       description: Appends a prefix to all newly created resources
       default: ""

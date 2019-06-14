@@ -28,7 +28,7 @@ variable location {
 
 variable resource_group_name {
   description = "Enter a resource group"
-  default     = ""
+  default     = "local-rg"
 }
 
 
@@ -38,22 +38,22 @@ variable resource_group_name {
 
 variable vnet_name {
   description = "Enter VNET name"
-  default     = ""
+  default     = "vmseries-vnet"
 }
 
 variable vnet_cidr {
-  description = "Enter VNET name"
-  default     = ""
+  description = "VNET CIDR"
+  default     = "10.0.0.0/16"
 }
 
 variable subnet_names {
-  description = "Enter client ID"
-  default     = ""
+  description = "Subnet names"
+  default     = "mgmt,untrust,trust"
 }
 
 variable "subnet_prefixes" {
-  description = "Enter client ID"
-  default     = ""
+  description = "Subnet prefixes"
+  default     = "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
 }
 
 #************************************************************************************
@@ -61,7 +61,7 @@ variable "subnet_prefixes" {
 #************************************************************************************
 
 variable "fw_names" {
-  description = "Enter firewall names"
+  description = "Enter firewall names.  Every name entered creates an additional instance"
   default     = "vmseries-fw1,vmseries-fw2"
 }
 variable "fw_username" {
@@ -86,13 +86,13 @@ variable "fw_nsg_source_prefix" {
 }
 
 variable "internal_lb_address" {
-  default = ""
+  default = "10.0.2.100"
 }
 variable "public_lb_ports" {
-  default = ""
+  default = "80,443,22"
 }
 variable "prefix" {
-  default = ""
+  default = "local-"
 }
 
 

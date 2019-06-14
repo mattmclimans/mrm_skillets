@@ -53,8 +53,10 @@ module "vmseries" {
  // prefix                  = "${var.prefix}"
 
 }
-
-
+/*
+module "vmseries_baseline" {
+    source                  = "./modules/create_vmseries/"
+}
 /*
 
 internal_lb_address
@@ -63,3 +65,15 @@ fw_untrust_ips
 
 
 */
+
+output "FW MGMT ADDRESSES" {
+  value = "${module.vmseries.fw_nic0_pip}"
+}
+
+output "FW MGMT ADDRESSES_0" {
+  value = "${module.vmseries.fw_nic0_pip[0]}"
+}
+
+output "FW MGMT ADDRESSES_1" {
+  value = "${module.vmseries.fw_nic0_pip[1]}"
+}
