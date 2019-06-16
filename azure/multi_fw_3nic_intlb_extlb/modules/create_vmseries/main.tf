@@ -77,6 +77,10 @@ variable "lb_health_probe_port" {
   default = "22"
 }
 
+
+variable "apply_pip" {
+  default = "true,true"
+}
 variable "sku" {
   description = "SKU for Public IP and Load Balancer"
   default     = "Standard"
@@ -103,6 +107,7 @@ variable "enable_floating_ip" {
 locals {
   fw_names        = "${split(",", replace(var.fw_names, " ", ""))}"
   public_lb_ports = "${split(",", replace(var.public_lb_ports, " ", ""))}"
+  apply_pip = "${split(",", replace(var.apply_pip, " ", ""))}"
 }
 
 #************************************************************************************
@@ -160,7 +165,7 @@ resource "azurerm_network_security_group" "nic0" {
 # CREATE PIPs (conditional) var.apply_pip_to_management == "yes" 
 #************************************************************************************
 resource "azurerm_public_ip" "nic0" {
-  count               = "${(var.apply_pip_to_management) ? length(local.fw_names) : 0}"
+  count               = "${(element(local.apply_pip, 0)) ? length(local.fw_names) : 0}" //"${(var.apply_pip_to_management) ? length(local.fw_names) : 0}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic0-pip"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -169,7 +174,7 @@ resource "azurerm_public_ip" "nic0" {
 }
 
 resource "azurerm_public_ip" "nic1" {
-  count               = "${(var.apply_pip_to_dataplane1) ? length(local.fw_names) : 0}"
+  count               = "${(element(local.apply_pip, 1)) ? length(local.fw_names) : 0}"//"${(var.apply_pip_to_dataplane1) ? length(local.fw_names) : 0}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic1-pip"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -235,7 +240,7 @@ resource "azurerm_network_interface" "nic0" {
     subnet_id                     = "${element(var.fw_subnet_ids, 0)}"
     private_ip_address_allocation = "Static"
     private_ip_address            = "${azurerm_network_interface.nic0_dynamic.*.private_ip_address[count.index]}"
-    public_ip_address_id          = "${(var.apply_pip_to_management) ? element(concat(azurerm_public_ip.nic0.*.id, list("")), count.index) : ""}"
+    public_ip_address_id          = "${(element(local.apply_pip, 0)) ? element(concat(azurerm_public_ip.nic0.*.id, list("")), count.index) : ""}"//"${(var.apply_pip_to_management) ? element(concat(azurerm_public_ip.nic0.*.id, list("")), count.index) : ""}"
   }
 }
 
@@ -252,7 +257,8 @@ resource "azurerm_network_interface" "nic1" {
     subnet_id                     = "${element(var.fw_subnet_ids, 1)}"
     private_ip_address_allocation = "Static"
     private_ip_address            = "${azurerm_network_interface.nic1_dynamic.*.private_ip_address[count.index]}"
-    public_ip_address_id          = "${(var.apply_pip_to_dataplane1) ? element(concat(azurerm_public_ip.nic1.*.id, list("")), count.index) : ""}"
+    public_ip_address_id          = "${(element(local.apply_pip, 1)) ? element(concat(azurerm_public_ip.nic1.*.id, list("")), count.index) : ""}"
+    //public_ip_address_id          = "${(var.apply_pip_to_dataplane1) ? element(concat(azurerm_public_ip.nic1.*.id, list("")), count.index) : ""}"
   }
 }
 

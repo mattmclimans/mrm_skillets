@@ -104,10 +104,14 @@ variable "apply_pip_to_dataplane1" {
   default = true 
 }
 
+variable "apply_pip" {
+  default = "false,false" 
+}
+
 variable "create_public_lb" {
-  default = true
+  default = false
 }
 variable "create_internal_lb" {
-  default = true
+  default = false
 }
 

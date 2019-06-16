@@ -41,7 +41,7 @@ module "vmseries" {
   fw_subnet_ids           = "${module.vnet.vnet_subnets}"
   apply_pip_to_management = "${var.apply_pip_to_management}"
   apply_pip_to_dataplane1 = "${var.apply_pip_to_dataplane1}"
-  
+  apply_pip               = "${var.apply_pip}"
   
   create_public_lb        = "${var.create_public_lb}"
   public_lb_ports         = "${var.public_lb_ports}"

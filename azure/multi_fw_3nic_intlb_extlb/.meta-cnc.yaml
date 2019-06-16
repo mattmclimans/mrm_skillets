@@ -140,3 +140,16 @@ variables:
          value: true
        - key: No - Do not apply Public IP
          value: false
+    - name: apply_pip
+      description: Public IP Options
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: Apply to MGMT & UNTRUST
+         value: "true,true"
+       - key: MGMT Only
+         value: "true,false"
+       - key: Untrust Only
+         value: "false,true"
+       - key: None
+         value: "false,false"
