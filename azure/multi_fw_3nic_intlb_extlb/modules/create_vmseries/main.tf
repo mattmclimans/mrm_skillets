@@ -275,7 +275,7 @@ resource "azurerm_network_interface" "nic2" {
 #************************************************************************************
 # CREATE VM-SERIES
 #************************************************************************************
-
+/*
 resource "azurerm_virtual_machine" "vmseries" {
   count                        = "${length(local.fw_names)}"
   name                         = "${local.fw_names[count.index]}"
@@ -323,7 +323,7 @@ resource "azurerm_virtual_machine" "vmseries" {
     #   custom_data    = "${join(",", list("storage-account=${var.BootstrapStorageAccount}", "access-key=${var.StorageAccountAccessKey}", "file-share=${var.StorageAccountFileShare}", "share-directory=${var.StorageAccountFileShareDirectory}"))}"
   }
 }
-
+*/
 #************************************************************************************
 # CREATE PUBLIC_LB CONDITIONAL
 #************************************************************************************

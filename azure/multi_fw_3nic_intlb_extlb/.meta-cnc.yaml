@@ -69,6 +69,24 @@ variables:
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
+    - name: create_public_lb
+      description: Public LB Option
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: Create Public Load Balancer
+         value: true
+       - key: Do not create Public Load Balancer
+         value: false
+    - name: create_internal_lb
+      description: Internal LB Option
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: Create Internal Load Balancer
+         value: true
+       - key: Do not create Internal Load Balancer
+         value: false
     - name: internal_lb_address
       description: Internal Load Balancer Address - must be in last subnet space
       default: "10.0.2.100"
@@ -104,4 +122,21 @@ variables:
       description: Appends a prefix to all newly created resources
       default: ""
       type_hint: text
-    
+    - name: apply_pip_to_management
+      description: Public IP Management Interface
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: Yes - Apply Public IP
+         value: true
+       - key: No - Do not apply Public IP
+         value: false
+    - name: apply_pip_to_dataplane1
+      description: Public IP Untrust Interface
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: Yes - Apply Public IP
+         value: true
+       - key: No - Do not apply Public IP
+         value: false

@@ -28,7 +28,7 @@ variable location {
 
 variable resource_group_name {
   description = "Enter a resource group"
-  default     = "local-rg"
+  default     = "vmseries-rg"
 }
 
 
