@@ -99,7 +99,7 @@ variables:
        - key: PAYG-Bundle1
          value: bundle1
        - key: PAYG-Bundle2
-         value: bundle
+         value: bundle2
     - name: prefix
       description: Appends a prefix to all newly created resources
       default: ""
