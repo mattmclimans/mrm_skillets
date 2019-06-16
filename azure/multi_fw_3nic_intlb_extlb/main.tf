@@ -64,7 +64,7 @@ fw_mgmt_ips
 fw_untrust_ips
 
 
-*/
+
 
 output "FW MGMT ADDRESSES" {
   value = "${module.vmseries.fw_nic0_pip}"
@@ -77,3 +77,5 @@ output "FW MGMT ADDRESSES_0" {
 output "FW MGMT ADDRESSES_1" {
   value = "${module.vmseries.fw_nic0_pip[1]}"
 }
+
+*/
