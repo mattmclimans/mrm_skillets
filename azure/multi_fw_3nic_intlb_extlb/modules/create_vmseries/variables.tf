@@ -82,6 +82,8 @@ variable "vnet_name" {
   default     = "vmseries-vnet"
 }
 
+
+
 variable "vnet_rg" {
   description = "Default resource group name that the network will be created in."
   default     = "vmseries-rg"
@@ -114,4 +116,15 @@ variable "vnet_subnet_names" {
 variable "enable_floating_ip" {
   description = "Enable or disable floating IP address (true or false)"
   default     = true
+}
+
+
+
+variable "public_lb_name" {
+  default     = "public-lb"
+}
+
+
+variable "internal_lb_name" {
+  default     = "internal-lb"
 }

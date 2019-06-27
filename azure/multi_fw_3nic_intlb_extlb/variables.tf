@@ -75,10 +75,16 @@ variable "appgw_publb_intlb_option" {
 #  default = "0,0,0"  // none
 }
 
+variable "public_lb_name" {
+  default = "public-lb"
+}
 variable "public_lb_ports" {
   default = "80,443,22"
 }
 
+variable "internal_lb_name" {
+  default = "internal-lb"
+}
 variable "internal_lb_address" {
   default = "10.0.2.101"
 }

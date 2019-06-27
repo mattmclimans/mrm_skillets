@@ -32,7 +32,9 @@ module "vmseries" {
   fw_nsg_prefix            = "${var.fw_nsg_prefix}"
   fw_pip_option            = "${var.fw_pip_option}"
   appgw_publb_intlb_option = "${var.appgw_publb_intlb_option}"
+  public_lb_name           = "${var.public_lb_name}"
   public_lb_ports          = "${var.public_lb_ports}"
+  internal_lb_name         = "${var.internal_lb_name}"
   internal_lb_address      = "${var.internal_lb_address}"
 }
 

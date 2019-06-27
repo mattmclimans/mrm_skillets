@@ -81,6 +81,8 @@ variables:
       default:
       type_hint: dropdown
       dd_list:
+       - key: None
+         value: "0,0,0"
        - key: AppGW, Public LB, Internal LB
          value: "1,1,1"
        - key: AppGW, Public LB
@@ -95,14 +97,20 @@ variables:
          value: "0,1,0"
        - key: Internal LB
          value: "0,0,1"
-       - key: None
-         value: "0,0,0"
+    - name: public_lb_name
+      description: Public LB Name
+      default: public-lb
+      type_hint: text
     - name: public_lb_ports
-      description: Public Load Balancer Allowed Ports (for every port entered, a new rule is created)
+      description: Public LB Ports (for every port entered, a new LB rule is created)
       default: 80,443,22,3389
       type_hint: text
+    - name: internal_lb_name
+      description: Internal LB Name
+      default: internal-lb
+      type_hint: text
     - name: internal_lb_address
-      description: Internal Load Balancer Address - must be in last subnet space
+      description: Internal Load Balancer Address (must be in last subnet space)
       default: "10.0.2.100"
       type_hint: text
     - name: fw_rg
@@ -157,8 +165,8 @@ variables:
     - name: fw_password
       description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
       default:
-      type_hint: text
-    - name: fw_nsg_source_prefix
+      type_hint: securetext
+    - name: fw_nsg_prefix
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
