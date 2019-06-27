@@ -84,24 +84,35 @@ variables:
       description: Mgmt NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
-#    - name: create_public_lb
-#      description: Public LB Option
-#      default:
-#      type_hint: dropdown
-#      dd_list:
-#       - key: Create Public Load Balancer
-#         value: true
-#       - key: Do not create Public Load Balancer
-#         value: false
-#    - name: create_internal_lb
-#      description: Internal LB Option
-#      default:
-#      type_hint: dropdown
-#      dd_list:
-#       - key: Create Internal Load Balancer
-#         value: true
-#       - key: Do not create Internal Load Balancer
-#         value: false
+    - name: create_appgw_publb_intlb
+      description: Azure Additional Resource Options
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: AppGW, Public LB, Internal LB
+         value: "1,1,1"
+       - key: AppGW, Public LB
+         value: "1,1,0"
+       - key: AppGW, Internal LB
+         value: "1,0,1"
+       - key: AppGW
+         value: "1,0,0"
+       - key: Public LB, Internal LB
+         value: "0,1,1"
+       - key: Public LB
+         value: "0,1,0"
+       - key: Internal LB
+         value: "0,0,1"
+       - key: None
+         value: "0,0,0"
+    - name: public_lb_ports
+      description: Public Load Balancer Allowed Ports (for every port entered, a new rule is created)
+      default: 80,443,22,3389
+      type_hint: text
+    - name: internal_lb_address
+      description: Internal Load Balancer Address - must be in last subnet space
+      default: "10.0.2.100"
+      type_hint: text
     - name: fw_names
       description: FW names (for every name entered, a new VM is created)
       default: "vmseries-fw1,vmseries-fw2"
@@ -151,36 +162,3 @@ variables:
          value: "0,1"
        - key: None
          value: "0,0"
-    - name: create_appgw_publb_intlb
-      description: Azure Additional Resource Options
-      default:
-      type_hint: dropdown
-      dd_list:
-       - key: AppGW, Public LB, Internal LB
-         value: "1,1,1"
-       - key: AppGW, Public LB
-         value: "1,1,0"
-       - key: AppGW, Internal LB
-         value: "1,0,1"
-       - key: AppGW
-         value: "1,0,0"
-       - key: Public LB, Internal LB
-         value: "0,1,1"
-       - key: Public LB
-         value: "0,1,0"
-       - key: Internal LB
-         value: "0,0,1"
-       - key: None
-         value: "0,0,0"
-    - name: public_lb_ports
-      description: Public Load Balancer Allowed Ports (for every port entered, a new rule is created)
-      default: 80,443,22,3389
-      type_hint: text
-    - name: internal_lb_address
-      description: Internal Load Balancer Address - must be in last subnet space
-      default: "10.0.2.100"
-      type_hint: text
-    - name: prefix
-      description: Appends a prefix to all newly created resources
-      default: ""
-      type_hint: text
