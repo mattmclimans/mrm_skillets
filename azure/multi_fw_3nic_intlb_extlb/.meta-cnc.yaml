@@ -45,11 +45,7 @@ variables:
       description: Location
       default: eastus
       type_hint: text
-    - name: fw_rg
-      description: VM-Series Resource Group (do not use existing RG)
-      default: vmseries-rg
-      type_hint: text
-    - name: create_new_vnet
+    - name: vnet_option
       description: VNET Options
       default:
       type_hint: dropdown
@@ -68,23 +64,19 @@ variables:
       description: VNET Name
       default: vmseries-vnet
       type_hint: text
-    - name: address_space
+    - name: vnet_prefix
       description: VNET Address Space
       default: 10.0.0.0/16
       type_hint: text
-    - name: subnet_names
+    - name: vnet_subnet_names
       description: Subnet Names - 3 required
       default: "mgmt,untrust,trust"
       type: text
-    - name: subnet_prefixes
+    - name: vnet_subnet_prefixes
       description: Subnet Prefixes - 3 required
       default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
       type_hint: text
-    - name: fw_nsg_source_prefix
-      description: Mgmt NSG Source Prefix
-      default: "0.0.0.0/0"
-      type_hint: text
-    - name: create_appgw_publb_intlb
+    - name: appgw_publb_intlb_option
       description: Azure Additional Resource Options
       default:
       type_hint: dropdown
@@ -112,6 +104,10 @@ variables:
     - name: internal_lb_address
       description: Internal Load Balancer Address - must be in last subnet space
       default: "10.0.2.100"
+      type_hint: text
+    - name: fw_rg
+      description: FW Resource Group (do not use existing RG)
+      default: vmseries-rg
       type_hint: text
     - name: fw_names
       description: FW names (for every name entered, a new VM is created)
@@ -141,14 +137,6 @@ variables:
          value: bundle1
        - key: PAYG-Bundle2
          value: bundle2
-    - name: fw_username
-      description: FW Username (do not use admin or root)
-      default: paloalto
-      type_hint: text
-    - name: fw_password
-      description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
-      default:
-      type_hint: text
     - name: create_public_ips
       description: FW Public IP Options
       default:
@@ -162,3 +150,15 @@ variables:
          value: "0,1"
        - key: None
          value: "0,0"
+    - name: fw_username
+      description: FW Username (do not use admin or root)
+      default: paloalto
+      type_hint: text
+    - name: fw_password
+      description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
+      default:
+      type_hint: text
+    - name: fw_nsg_source_prefix
+      description: Mgmt NSG Source Prefix
+      default: "0.0.0.0/0"
+      type_hint: text

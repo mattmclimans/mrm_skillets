@@ -1,5 +1,5 @@
 #************************************************************************************
-# SET location AND SSH KEY FOR EC2 INSTANCES
+# Azure environment variables
 #***********************************************************************************
 variable subscription_id {
   description = "Enter client ID"
@@ -26,19 +26,14 @@ variable location {
   default     = "eastus"
 }
 
-variable fw_rg {
-  description = "Enter a resource group"
-  default     = "vmseries-rg1"
-}
-
 #************************************************************************************
 # VNET VARIABLES
 #************************************************************************************
 
-variable "create_new_vnet" {
-#  default = "1,1" // new vnet, new subnets
-#  default = "0,1" // existing vnet, new subnets
-  default = "0,0" // existing vnet, existing subnets
+variable "vnet_option" {
+#  default = "1,1" // create new vnet, new subnets
+#  default = "0,1" // use existing vnet, create new subnets
+  default = "0,0" // use existing vnet, use existing subnets
 }
 
 variable "vnet_rg" {
@@ -50,39 +45,60 @@ variable vnet_name {
   default     = "vmseries-vnet"
 }
 
-variable address_space {
+variable vnet_prefix {
   description = "VNET CIDR"
   default     = "10.0.0.0/16"
 }
 
-variable subnet_names {
+variable vnet_subnet_names {
   description = "Subnet names"
   default     = "mgmt,untrust,trust"
 }
 
-variable "subnet_prefixes" {
+variable "vnet_subnet_prefixes" {
   description = "Subnet prefixes"
   default     = "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
 }
 
 #************************************************************************************
+# ADDITIONAL AZURE RESOURCES
+#************************************************************************************
+
+variable "appgw_publb_intlb_option" {
+  default = "1,1,1"   // appgw, publb, intlb
+#  default = "0,1,1"  // publb, intlb
+#  default = "1,0,1"  // appgw, intlb
+#  default = "0,0,1"  // intlb
+#  default = "1,1,0"  // appgw, publb
+#  default = "0,1,0"  // publb
+#  default = "1,0,0"  // appgw
+#  default = "0,0,0"  // none
+}
+
+variable "public_lb_ports" {
+  default = "80,443,22"
+}
+
+variable "internal_lb_address" {
+  default = "10.0.2.101"
+}
+
+
+
+#************************************************************************************
 # VM-SERIES VARIABLES
 #************************************************************************************
+variable fw_rg {
+  description = "Enter a resource group"
+  default     = "vmseries-rg"
+}
 
 variable "fw_names" {
   description = "Enter firewall names.  Every name entered creates an additional instance"
-  default     = "fw3,fw4"
+  default     = "fw1,fw2"
 }
 
-variable "fw_username" {
-  default = "paloalto"
-}
-
-variable "fw_password" {
-  default = "PanPassword123!"
-}
-
-variable "fw_panos_version" {
+variable "fw_panos" {
   default = "latest"
 }
 
@@ -90,27 +106,23 @@ variable "fw_license" {
   default = "bundle1"
 }
 
-variable "fw_nsg_source_prefix" {
+variable "fw_pip_option" {
+  default = "1,1"  // mgmt pip yes, untrust pip yes
+ # default = "1,0" // mgmt pip yes, untrust pip no
+ # default = "0,1" // mgmt pip no,  untrust pip yes
+ # default = "0,0" // mgmt pip no,  untrust pip no 
+}
+
+variable "fw_username" {
+  default = "paloalto"
+}
+
+variable "fw_password" {
+#  default = ""
+}
+
+variable "fw_nsg_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
   default     = "0.0.0.0/0"
 }
 
-variable "internal_lb_address" {
-  default = "10.0.2.100"
-}
-
-variable "public_lb_ports" {
-  default = "80,443,22"
-}
-
-variable "prefix" {
-  default = "local-"
-}
-
-variable "create_public_ips" {
-  default = "0,0"
-}
-
-variable "create_appgw_publb_intlb" {
-  default = "0,0,0"
-}
