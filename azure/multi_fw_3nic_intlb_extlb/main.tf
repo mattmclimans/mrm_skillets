@@ -12,47 +12,57 @@ provider "azurerm" {
 # CREATE SECURITY VPC & SUBNETS
 #************************************************************************************
 
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.resource_group_name}"
-  location = "${var.location}"
+locals {
+  create_new_vnet = "${split(",", replace(var.create_new_vnet, " ", ""))}"
+
+  // new_rg_vnet         = "${azurerm_resource_group.rg.name}"   
 }
 
+
+/*
 module "vnet" {
   source              = "./modules/create_vnet/"
+  create_new_vnet     = "${var.create_new_vnet}"
   vnet_name           = "${var.vnet_name}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
+  resource_group_name = "${var.vnet_rg}"
   location            = "${var.location}"
   address_space       = "${var.address_space}"
   subnet_names        = "${var.subnet_names}"
   subnet_prefixes     = "${var.subnet_prefixes}"
 }
-
+*/
 
 module "vmseries" {
-  source                  = "./modules/create_vmseries/"
-  resource_group_name     = "${azurerm_resource_group.rg.name}"
-  location                = "${var.location}"
-  fw_names                = "${var.fw_names}"
-  fw_username             = "${var.fw_username}"
-  fw_password             = "${var.fw_password}"
-  fw_panos_version        = "${var.fw_panos_version}"
-  fw_license              = "${var.fw_license}"
-  fw_nsg_source_prefix    = "${var.fw_nsg_source_prefix}"
-  fw_subnet_ids           = "${module.vnet.vnet_subnets}"
-  apply_pip_to_management = "${var.apply_pip_to_management}"
-  apply_pip_to_dataplane1 = "${var.apply_pip_to_dataplane1}"
-  apply_pip               = "${var.apply_pip}"
-  
-  create_public_lb        = "${var.create_public_lb}"
-  public_lb_ports         = "${var.public_lb_ports}"
+  source = "./modules/create_vmseries/"
 
-  create_internal_lb  = "${var.create_internal_lb}"
-  internal_lb_address    = "${var.internal_lb_address}"
-  internal_lb_subnet_id           = "${module.vnet.vnet_subnets[2]}"
-  
- // prefix                  = "${var.prefix}"
+  create_new_vnet          = "${var.create_new_vnet}"
+  vnet_name                = "${var.vnet_name}"
+  vnet_resource_group_name = "${var.vnet_rg}"
+  location                 = "${var.location}"
+  address_space            = "${var.address_space}"
+  subnet_names             = "${var.subnet_names}"
+  subnet_prefixes          = "${var.subnet_prefixes}"
 
+  fw_resource_group_name = "${var.fw_rg}"
+
+  fw_names             = "${var.fw_names}"
+  fw_username          = "${var.fw_username}"
+  fw_password          = "${var.fw_password}"
+  fw_panos_version     = "${var.fw_panos_version}"
+  fw_license           = "${var.fw_license}"
+  fw_nsg_source_prefix = "${var.fw_nsg_source_prefix}"
+
+  //fw_subnet_ids            = "${(element(local.create_new_vnet, 0)) ? module.vnet.vnet_subnets : module.vnet.vnet_subnets_data}"//["${module.vnet.vnet_subnets}"]
+  create_public_ips        = "${var.create_public_ips}"
+  create_appgw_publb_intlb = "${var.create_appgw_publb_intlb}"
+  public_lb_ports          = "${var.public_lb_ports}"
+  internal_lb_address      = "${var.internal_lb_address}"
+
+  //  internal_lb_subnet_id    = "${module.vnet.vnet_subnets_data[2]}"
+
+  // prefix                  = "${var.prefix}"
 }
+
 /*
 module "vmseries_baseline" {
     source                  = "./modules/create_vmseries/"
@@ -79,3 +89,4 @@ output "FW MGMT ADDRESSES_1" {
 }
 
 */
+

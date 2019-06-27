@@ -26,15 +26,24 @@ variable location {
   default     = "eastus"
 }
 
-variable resource_group_name {
+variable fw_rg {
   description = "Enter a resource group"
-  default     = "vmseries-rg"
+  default     = "vmseries-rg1"
 }
-
 
 #************************************************************************************
 # VNET VARIABLES
 #************************************************************************************
+
+variable "create_new_vnet" {
+#  default = "1,1" // new vnet, new subnets
+#  default = "0,1" // existing vnet, new subnets
+  default = "0,0" // existing vnet, existing subnets
+}
+
+variable "vnet_rg" {
+  default = "vnet-rg"
+}
 
 variable vnet_name {
   description = "Enter VNET name"
@@ -62,18 +71,19 @@ variable "subnet_prefixes" {
 
 variable "fw_names" {
   description = "Enter firewall names.  Every name entered creates an additional instance"
-  default     = "vmseries-fw1,vmseries-fw2"
+  default     = "fw3,fw4"
 }
+
 variable "fw_username" {
-  default     = "paloalto"
+  default = "paloalto"
 }
 
 variable "fw_password" {
-  default     = "PanPassword123!"
+  default = "PanPassword123!"
 }
 
 variable "fw_panos_version" {
-  default     = "latest"
+  default = "latest"
 }
 
 variable "fw_license" {
@@ -88,30 +98,19 @@ variable "fw_nsg_source_prefix" {
 variable "internal_lb_address" {
   default = "10.0.2.100"
 }
+
 variable "public_lb_ports" {
   default = "80,443,22"
 }
+
 variable "prefix" {
   default = "local-"
 }
 
-
-variable "apply_pip_to_management" {
-  default = true 
+variable "create_public_ips" {
+  default = "0,0"
 }
 
-variable "apply_pip_to_dataplane1" {
-  default = true 
+variable "create_appgw_publb_intlb" {
+  default = "0,0,0"
 }
-
-variable "apply_pip" {
-  default = "false,false" 
-}
-
-variable "create_public_lb" {
-  default = false
-}
-variable "create_internal_lb" {
-  default = false
-}
-
