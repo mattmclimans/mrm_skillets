@@ -513,6 +513,7 @@ resource "azurerm_lb_rule" "public_lb" {
   count                          = "${element(local.appgw_publb_intlb_option, 1) ? length(local.public_lb_ports) : 0}"
   loadbalancer_id                = "${azurerm_lb.public_lb.id}"
   name                           = "rule-${count.index}"
+  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   protocol                       = "${var.protocol}"
   frontend_port                  = "${element(local.public_lb_ports, count.index)}"
   backend_port                   = "${element(local.public_lb_ports, count.index)}"
