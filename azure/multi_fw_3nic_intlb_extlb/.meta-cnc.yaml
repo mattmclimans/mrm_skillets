@@ -52,9 +52,9 @@ variables:
       dd_list:
        - key: Create a new VNET
          value: "1,1"
-       - key:  Use existing VNET with new subnets
+       - key:  Use existing VNET & create new subnets
          value: "0,1"
-       - key: Use existing VNET with existing subnets
+       - key: Use existing VNET & use existing subnets
          value: "0,0"
     - name: vnet_rg
       description: VNET Resource Group
@@ -69,27 +69,27 @@ variables:
       default: 10.0.0.0/16
       type_hint: text
     - name: vnet_subnet_names
-      description: Subnet Names - 3 required
+      description: Subnet Names (minimum 3 in comma separated list with no spaces)
       default: "mgmt,untrust,trust"
       type: text
     - name: vnet_subnet_prefixes
-      description: Subnet Prefixes - 3 required
+      description: Subnet Prefixes (must match number of subnets entered)
       default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24"
       type_hint: text
     - name: appgw_publb_intlb_option
-      description: Azure Additional Resource Options
+      description: Deploy App GW, Public LB, Internal LB?
       default:
       type_hint: dropdown
       dd_list:
        - key: None
          value: "0,0,0"
-       - key: AppGW, Public LB, Internal LB
+       - key: Deploy App GW, Public LB, Internal LB
          value: "1,1,1"
-       - key: AppGW, Public LB
+       - key: App GW, Public LB
          value: "1,1,0"
-       - key: AppGW, Internal LB
+       - key: App GW, Internal LB
          value: "1,0,1"
-       - key: AppGW
+       - key: App GW
          value: "1,0,0"
        - key: Public LB, Internal LB
          value: "0,1,1"
@@ -150,7 +150,7 @@ variables:
       default:
       type_hint: dropdown
       dd_list:
-       - key: Apply to MGMT & UNTRUST
+       - key: Apply public IP to MGMT & UNTRUST
          value: "1,1"
        - key: MGMT Only
          value: "1,0"
@@ -168,5 +168,9 @@ variables:
       type_hint: securetext
     - name: fw_nsg_prefix
       description: Mgmt NSG Source Prefix
+      default: "0.0.0.0/0"
+      type_hint: text
+    - name: prefix
+      description: (Opt) Prefix to append to resources
       default: "0.0.0.0/0"
       type_hint: text

@@ -376,7 +376,7 @@ resource "azurerm_network_interface" "nic2_static_1" {
 #************************************************************************************
 resource "azurerm_virtual_machine" "vmseries_0" {
   count                        = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"       //  "${length(local.fw_names)}"
-  name                         = "${local.fw_names[count.index]}"
+  name                         = "${var.prefix}${local.fw_names[count.index]}"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.fw_rg.name}"
   vm_size                      = "${var.fw_size}"
@@ -424,7 +424,7 @@ resource "azurerm_virtual_machine" "vmseries_0" {
 
 resource "azurerm_virtual_machine" "vmseries_1" {
   count                        = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"       //  "${length(local.fw_names)}"
-  name                         = "${local.fw_names[count.index]}"
+  name                         = "${var.prefix}${local.fw_names[count.index]}"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.fw_rg.name}"
   vm_size                      = "${var.fw_size}"
@@ -475,7 +475,7 @@ resource "azurerm_virtual_machine" "vmseries_1" {
 #************************************************************************************
 resource "azurerm_public_ip" "public_lb" {
   count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
-  name                = "${var.prefix}public-lb-pip"
+  name                = "${var.prefix}${var.public_lb_name}-pip"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   allocation_method   = "${var.public_ip_address_allocation}"
@@ -484,7 +484,7 @@ resource "azurerm_public_ip" "public_lb" {
 
 resource "azurerm_lb" "public_lb" {
   count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
-  name                = "${var.prefix}public-lb"
+  name                = "${var.prefix}${var.public_lb_name}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   location            = "${var.location}"
   sku                 = "${var.sku}"
@@ -546,7 +546,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "public_lb
 #************************************************************************************
 resource "azurerm_lb" "internal_lb_0" {
   count               = "${(element(local.vnet_option, 1)) && element(local.appgw_publb_intlb_option, 2) ? 1 : 0}"
-  name                = "${var.prefix}internal-lb"
+  name                = "${var.prefix}${var.internal_lb_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   sku                 = "Standard"
@@ -622,7 +622,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "internal_
 
 resource "azurerm_lb" "internal_lb_1" {
   count               = "${(element(local.vnet_option, 1)) && element(local.appgw_publb_intlb_option, 2) ? 0 : 1}"
-  name                = "${var.prefix}internal-lb"
+  name                = "${var.prefix}${var.internal_lb_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   sku                 = "Standard"
