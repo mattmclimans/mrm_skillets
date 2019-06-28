@@ -1,5 +1,5 @@
 ### Multi-FW (3 NIC) with optional Public & Internal Load Balancers
-This is a PanHandler Skillet that can deploy some of the most frequently used deployments for the VM-Series in Microsoft Azure. The templates can be deployed in a manner to meet Palo Alto Networks Azure Reference Architectures and/or be deployed to meet specific deployment requirements. More information on the Palo Alto Networks supported Azure deployments can be found here.
+This is a PanHandler Skillet that can deploy some of the most frequently used VM-Series deployments inin Microsoft Azure. The Skillet can be deployed in a manner to meet Palo Alto Networks Azure Reference Architectures and/or be deployed to meet specific deployment requirements.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/mattmclimans/mrm_skillets/master/azure/multi_fw_3nic_intlb_extlb/diagram.png">
@@ -16,8 +16,8 @@ This is a PanHandler Skillet that can deploy some of the most frequently used de
             * Accelerated Networking (optional)
         * dataplane1: `<fw_name>-nic1`
             * NSG: `<nsg_name>-data` 
-            * (Optional) Public IP Address: `<fw_name>-nic1-pip` (optional)
-            * (Optional) Accelerated Networking
+            * Public IP Address: `<fw_name>-nic1-pip` (optional)
+            * Accelerated Networking
         * dataplane2: `<fw_name>-nic2`
             * NSG: `<nsg_name>-data`  
             * Accelerated Networking (optional)
@@ -32,14 +32,9 @@ This is a PanHandler Skillet that can deploy some of the most frequently used de
 * (Optional) 1 x Standard SKU Internal Load Balancer with HA Ports
     *  Backend Pool: `<fw1_name>-nic2` & `<fw2_name>-nic2`
 
-#### S3 Buckets Overview
-* 2 x S3 Buckets are deployed & configured to bootstrap the firewalls with a fully working configuration.
-* The buckets names have a random 30 string added to its name for global uniqueness `tgw-fw#-bootstrap-<randomString>`
-
 ## Prerequistes 
 1. Working installation of PanHandler
-2. AWS EC2 Key Pair
-3. AWS Account with an AWS Access Key & Secret Key
+2. Azure Subscription ID, Client ID, Tenant ID, and Client Secret
 
 ## How to Deploy
 1.  Import the skillet repo
