@@ -121,7 +121,7 @@ variables:
       description: FW names (for every name entered, a new VM is created)
       default: "vmseries-fw1,vmseries-fw2"
       type_hint: text
-    - name: fw_panos_version
+    - name: fw_panos
       description: FW PAN-OS Version
       default: eastus
       type_hint: dropdown
@@ -167,10 +167,10 @@ variables:
       default:
       type_hint: securetext
     - name: fw_nsg_prefix
-      description: Mgmt NSG Source Prefix
+      description: FW NSG Source Prefix
       default: "0.0.0.0/0"
       type_hint: text
     - name: prefix
-      description: (Opt) Prefix to append to resources
-      default: "0.0.0.0/0"
+      description: (optional) Prefix to append to resources
+      default: ""
       type_hint: text
