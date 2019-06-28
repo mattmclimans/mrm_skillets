@@ -19,7 +19,7 @@ extends:
 # group multiple skillets of the same type (pan-os skillets labeled as version: 9.0 for example)
 labels:
   terraform_provider: azure
-  collection: MRM AWS Skillets
+  collection: MRM Azure Skillets
 
 # Variables will be presented to the user via the Panhandler GUI. These values will then be passed to
 # the terraform binary as '--var' options, thus overriding any tfvars entries.
