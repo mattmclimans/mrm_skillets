@@ -1,4 +1,4 @@
-## 2 x VM-Series / Transit Gateway / 2 x Spokes VPCs
+# 2 x VM-Series / Transit Gateway / 2 x Spokes VPCs
 This is a PanHandler Skillet that builds a TGW design using VPC attachments. Two VM-Series are deployed into a security VPC that protect north-south and east-west traffic for 2 internal spoke VPCs.
 
 ## Overview
@@ -6,13 +6,13 @@ This is a PanHandler Skillet that builds a TGW design using VPC attachments. Two
 <img src="https://raw.githubusercontent.com/mattmclimans/mrm_skillets/master/aws/tgw_2fw_vpc_insertion/images/diagram.png">
 </p>
 
-#### VM-Series Overview
+## VM-Series Overview
 * Firewall-1 handles egress traffic to internet
 * Firewall-2 handles east/west traffic between Spoke1-VPC and Spoke2-VPC
 * Both Firewalls can handle inbound traffic to the spokes
 * Firewalls are bootstrapped off an S3 Bucket (buckets are created during deployment)
 
-#### S3 Buckets Overview
+## S3 Buckets Overview
 * 2 x S3 Buckets are deployed & configured to bootstrap the firewalls with a fully working configuration.
 * The buckets names have a random 30 string added to its name for global uniqueness `tgw-fw#-bootstrap-<randomString>`
 

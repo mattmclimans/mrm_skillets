@@ -122,7 +122,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "bootstrap_policy" {
-  name = "ngfw_bootstrap_policy"
+  name = "ngfw_bootstrap_policy_${random_string.randomstring.result}"
   role = "${aws_iam_role.bootstrap_role.id}"
 
   policy = <<EOF
@@ -155,7 +155,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "bootstrap_profile" {
-  name = "ngfw_bootstrap_profile"
+  name = "ngfw_bootstrap_profile_${random_string.randomstring.result}"
   role = "${aws_iam_role.bootstrap_role.name}"
   path = "/"
 }
