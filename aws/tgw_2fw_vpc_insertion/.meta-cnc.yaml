@@ -41,6 +41,17 @@ variables:
       description: EC2 Keypair Name
       default:
       type_hint: text
+    - name: fw_license
+      description: FW License
+      default:
+      type_hint: dropdown
+      dd_list:
+       - key: BYOL
+         value: byol
+       - key: PAYG-Bundle1
+         value: payg1
+       - key: PAYG-Bundle2
+         value: payg2
     - name: management_cidr
       description: FW SG Source Prefix
       default: "0.0.0.0/0"
