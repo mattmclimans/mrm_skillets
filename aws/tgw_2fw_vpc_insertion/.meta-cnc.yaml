@@ -41,7 +41,7 @@ variables:
       description: EC2 Keypair Name
       default:
       type_hint: text
-    - name: fw_license
+    - name: ngfw_license_type
       description: FW License
       default:
       type_hint: dropdown
