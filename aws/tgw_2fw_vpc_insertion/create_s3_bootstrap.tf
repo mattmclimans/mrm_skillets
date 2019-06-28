@@ -103,7 +103,7 @@ resource "aws_s3_bucket_object" "content2" {
 # CREATE & ASSIGN IAM ROLE, POLICY, & INSTANCE PROFILE
 #************************************************************************************
 resource "aws_iam_role" "bootstrap_role" {
-  name = "ngfw_bootstrap_role"
+  name = "bootstrap_s3_role_${random_string.randomstring.result}"
 
   assume_role_policy = <<EOF
 {
