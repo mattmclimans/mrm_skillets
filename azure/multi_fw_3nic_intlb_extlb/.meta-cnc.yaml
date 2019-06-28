@@ -83,14 +83,6 @@ variables:
       dd_list:
        - key: None
          value: "0,0,0"
-       - key: Deploy App GW, Public LB, Internal LB
-         value: "1,1,1"
-       - key: App GW, Public LB
-         value: "1,1,0"
-       - key: App GW, Internal LB
-         value: "1,0,1"
-       - key: App GW only
-         value: "1,0,0"
        - key: Public LB, Internal LB
          value: "0,1,1"
        - key: Public LB only
