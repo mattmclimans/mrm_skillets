@@ -4,10 +4,10 @@
 name: azure_multifw_3nic_intlb_extlb
 
 # label should be a human readable label that conveys what this skillet will do 
-label: Azure Multi-FW
+label: Azure Multi-FW with LBs
 
 # description is a longer more informative version of a label
-description: Creates multiple firewalls with optional public & internal load balancers.
+description:  Multiple FWs with optional public & internal LBs
 
 # type instructs Panhandler how to consume this skillet
 type: terraform
@@ -19,7 +19,7 @@ extends:
 # group multiple skillets of the same type (pan-os skillets labeled as version: 9.0 for example)
 labels:
   terraform_provider: azure
-
+  collection: MRM AWS Skillets
 
 # Variables will be presented to the user via the Panhandler GUI. These values will then be passed to
 # the terraform binary as '--var' options, thus overriding any tfvars entries.

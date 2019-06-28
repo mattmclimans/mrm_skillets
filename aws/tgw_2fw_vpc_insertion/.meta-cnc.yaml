@@ -7,7 +7,7 @@ name: tgw_2fw_vpc_insertion
 label: AWS TGW Demo
 
 # description is a longer more informative version of a label
-description: Creates 2 VM-Series (fully configured) with 2 Spoke VPCs connected to a TGW
+description: Creates 2 VM-Series with 2 Spoke VPCs connected to a TGW
 
 # type instructs Panhandler how to consume this skillet
 type: terraform
@@ -19,7 +19,7 @@ extends:
 # group multiple skillets of the same type (pan-os skillets labeled as version: 9.0 for example)
 labels:
   terraform_provider: aws
-
+  collection: MRM AWS Skillets
 
 # Variables will be presented to the user via the Panhandler GUI. These values will then be passed to
 # the terraform binary as '--var' options, thus overriding any tfvars entries.
