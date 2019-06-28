@@ -1,12 +1,9 @@
 ## 2 x VM-Series / Transit Gateway / 2 x Spokes VPCs
-This build is an iteration of [djspears build](https://github.com/wwce/terraform/tree/master/aws/TGW-VPC) that contains the following differences:
-1. Spoke-to-Internet traffic explicitly flows through firewall-1 (no SNAT).  
-2. Spoke-to-Spoke traffic explicitly flows through firewall-2 (no SNAT).
-3. Creation of dedicated route tables for each subnet (main route table is not used).
+This is a PanHandler Skillet that builds a TGW design using VPC attachments. Two VM-Series are deployed into a security VPC that protect north-south and east-west traffic for 2 internal spoke VPCs.
 
 ## Overview
 <p align="center">
-<img src="https://raw.githubusercontent.com/wwce/terraform/master/aws/tgw_2fw_vpc_insertion/images/diagram.png">
+<img src="https://raw.githubusercontent.com/mattmclimans/mrm_skillets/master/aws/tgw_2fw_vpc_insertion/images/diagram.png">
 </p>
 
 #### VM-Series Overview
@@ -20,16 +17,16 @@ This build is an iteration of [djspears build](https://github.com/wwce/terraform
 * The buckets names have a random 30 string added to its name for global uniqueness `tgw-fw#-bootstrap-<randomString>`
 
 ## Prerequistes 
-1. This Terraform build assumes the AWS CLI is installed on the machine doing the deploymnet [(Install AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) .
-2. If you do not want to use the AWS CLI, the `providers.tf` must be modified to include your AWS Access Key and Secret Key [(more info)](https://www.terraform.io/docs/providers/aws/index.html).
+1. Working installation of PanHandler
+2. AWS EC2 Key Pair
+3. AWS Account with an AWS Access Key & Secret Key
 
 ## How to Deploy
-1.  Download the **tgw_2fw_vpc_insertion** directory.
-2.  In an editor, open `variables.tf`
-    *  `Line 10`:  Set your existing AWS EC2 Key 
-    *  `Line 14`:  Enter a source address to access the VM-Series management interface (in valid CIDR notation).  This address will be added to the management interface's Network Security Group.
-    *  `Line 17`:  Uncomment either 'byol', 'payg1', or 'payg2'.  This sets the licensing for both VM-Series firewalls (bring-your-own-license, bundle1, or bundle2).  
-3. (Optional) If you are using BYOL and would like to license the VM-Series via bootstrapping, paste your authcode in  `bootstrap_files/fw1/authcodes` and `bootstrap_files/fw2/authcodes`.  (Note: The authcode must be registered prior to deployment).
+1.  Import the skillet repo
+2.  Launch the **AWS TGW Demo** skillet
+3.  Enter the AWS region for the demo environment, followed by your AWS Access Key and its Secret Key.
+4.  Enter the name of an **existing** EC2 Key Pair
+5.  Select the VM-Series license and enter a source prefix (in valid CIDR notation) to add to the VM-Series management Security Group.
 4. After deployment, the firewalls' username and password are:
      * **Username:** paloalto
      * **Password:** PanPassword123!
