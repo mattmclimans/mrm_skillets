@@ -31,6 +31,7 @@ module "vmseries" {
   fw_license               = "${var.fw_license}"
   fw_nsg_prefix            = "${var.fw_nsg_prefix}"
   fw_pip_option            = "${var.fw_pip_option}"
+  fw_av_set_name           = "${var.fw_av_set_name}"
   appgw_publb_intlb_option = "${var.appgw_publb_intlb_option}"
   public_lb_name           = "${var.public_lb_name}"
   public_lb_ports          = "${var.public_lb_ports}"

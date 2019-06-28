@@ -1,7 +1,7 @@
 locals {
-  vnet_option          = "${split(",", replace(var.vnet_option, " ", ""))}"
-  vnet_subnet_prefixes = "${split(",", replace(var.vnet_subnet_prefixes, " ", ""))}"
-  vnet_subnet_names    = "${split(",", replace(var.vnet_subnet_names, " ", ""))}"
+  vnet_option              = "${split(",", replace(var.vnet_option, " ", ""))}"
+  vnet_subnet_prefixes     = "${split(",", replace(var.vnet_subnet_prefixes, " ", ""))}"
+  vnet_subnet_names        = "${split(",", replace(var.vnet_subnet_names, " ", ""))}"
   fw_names                 = "${split(",", replace(var.fw_names, " ", ""))}"
   fw_pip_option            = "${split(",", replace(var.fw_pip_option, " ", ""))}"
   appgw_publb_intlb_option = "${split(",", replace(var.appgw_publb_intlb_option, " ", ""))}"
@@ -24,7 +24,7 @@ resource "azurerm_resource_group" "vnet_rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   count               = "${(element(local.vnet_option, 0)) ? 1 : 0}"
-  name                = "${var.vnet_name}"
+  name                = "${var.prefix}${var.vnet_name}"
   location            = "${var.location}"
   address_space       = ["${var.vnet_prefix}"]
   resource_group_name = "${var.vnet_rg}"
@@ -73,7 +73,7 @@ resource "azurerm_network_security_group" "default" {
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   security_rule {
-    name                       = "${var.prefix}data-inbound"
+    name                       = "data-inbound"
     priority                   = 1000
     direction                  = "Inbound"
     access                     = "Allow"
@@ -140,14 +140,14 @@ resource "azurerm_public_ip" "nic1" {
 # CREATE NICS - DYNAMIC
 #************************************************************************************
 resource "azurerm_network_interface" "nic0_dynamic_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic0"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.0.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${azurerm_subnet.subnet.0.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -158,14 +158,14 @@ resource "azurerm_network_interface" "nic0_dynamic_0" {
 }
 
 resource "azurerm_network_interface" "nic0_dynamic_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic0"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${data.azurerm_subnet.subnet.0.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${data.azurerm_subnet.subnet.0.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -176,11 +176,11 @@ resource "azurerm_network_interface" "nic0_dynamic_1" {
 }
 
 resource "azurerm_network_interface" "nic0_static_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic0"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
-    network_security_group_id = "${azurerm_network_security_group.nic0.id}"
+  count                     = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic0"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
+  network_security_group_id = "${azurerm_network_security_group.nic0.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -197,10 +197,10 @@ resource "azurerm_network_interface" "nic0_static_0" {
 }
 
 resource "azurerm_network_interface" "nic0_static_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic0"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
+  count                     = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic0"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
   network_security_group_id = "${azurerm_network_security_group.nic0.id}"
 
   ip_configuration {
@@ -218,14 +218,14 @@ resource "azurerm_network_interface" "nic0_static_1" {
 }
 
 resource "azurerm_network_interface" "nic1_dynamic_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic1"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.1.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${azurerm_subnet.subnet.1.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -236,14 +236,14 @@ resource "azurerm_network_interface" "nic1_dynamic_0" {
 }
 
 resource "azurerm_network_interface" "nic1_dynamic_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic1"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${data.azurerm_subnet.subnet.1.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${data.azurerm_subnet.subnet.1.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -254,11 +254,11 @@ resource "azurerm_network_interface" "nic1_dynamic_1" {
 }
 
 resource "azurerm_network_interface" "nic1_static_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic1"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
-    network_security_group_id = "${azurerm_network_security_group.default.id}"
+  count                     = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic1"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
+  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -275,18 +275,18 @@ resource "azurerm_network_interface" "nic1_static_0" {
 }
 
 resource "azurerm_network_interface" "nic1_static_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic1"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
-    network_security_group_id = "${azurerm_network_security_group.default.id}"
+  count                     = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic1"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
+  network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${data.azurerm_subnet.subnet.1.id}"                                                                              //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${data.azurerm_subnet.subnet.1.id}"
     private_ip_address_allocation = "Static"
     private_ip_address            = "${azurerm_network_interface.nic1_dynamic_1.*.private_ip_address[count.index]}"
-    public_ip_address_id          = "${(element(local.fw_pip_option, 0)) ? element(concat(azurerm_public_ip.nic1.*.id, list("")), count.index) : ""}" //"${(var.apply_pip_to_management) ? element(concat(azurerm_public_ip.nic0.*.id, list("")), count.index) : ""}"
+    public_ip_address_id          = "${(element(local.fw_pip_option, 0)) ? element(concat(azurerm_public_ip.nic1.*.id, list("")), count.index) : ""}"
   }
 
   depends_on = [
@@ -296,14 +296,14 @@ resource "azurerm_network_interface" "nic1_static_1" {
 }
 
 resource "azurerm_network_interface" "nic2_dynamic_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic2"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.2.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${azurerm_subnet.subnet.2.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -314,14 +314,14 @@ resource "azurerm_network_interface" "nic2_dynamic_0" {
 }
 
 resource "azurerm_network_interface" "nic2_dynamic_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
+  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"
   name                = "${var.prefix}${local.fw_names[count.index]}-nic2"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${data.azurerm_subnet.subnet.2.id}" //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${data.azurerm_subnet.subnet.2.id}"
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -332,15 +332,15 @@ resource "azurerm_network_interface" "nic2_dynamic_1" {
 }
 
 resource "azurerm_network_interface" "nic2_static_0" {
-  count               = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic2"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
+  count                     = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic2"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
   network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = "${azurerm_subnet.subnet.2.id}"                                                 //"${element(var.fw_subnet_ids, 0)}"
+    subnet_id                     = "${azurerm_subnet.subnet.2.id}"
     private_ip_address_allocation = "Static"
     private_ip_address            = "${azurerm_network_interface.nic2_dynamic_0.*.private_ip_address[count.index]}"
   }
@@ -352,10 +352,10 @@ resource "azurerm_network_interface" "nic2_static_0" {
 }
 
 resource "azurerm_network_interface" "nic2_static_1" {
-  count               = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
-  name                = "${var.prefix}${local.fw_names[count.index]}-nic2"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
+  count                     = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}" //"${length(local.fw_names)}"
+  name                      = "${var.prefix}${local.fw_names[count.index]}-nic2"
+  location                  = "${var.location}"
+  resource_group_name       = "${azurerm_resource_group.fw_rg.name}"
   network_security_group_id = "${azurerm_network_security_group.default.id}"
 
   ip_configuration {
@@ -374,6 +374,12 @@ resource "azurerm_network_interface" "nic2_static_1" {
 #************************************************************************************
 # CREATE VM-SERIES
 #************************************************************************************
+resource "azurerm_availability_set" "default" {
+  name                = "${var.prefix}${var.fw_av_set_name}"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.fw_rg.name}"
+}
+
 resource "azurerm_virtual_machine" "vmseries_0" {
   count                        = "${(element(local.vnet_option, 1)) ? length(local.fw_names) : 0}"       //  "${length(local.fw_names)}"
   name                         = "${var.prefix}${local.fw_names[count.index]}"
@@ -388,7 +394,7 @@ resource "azurerm_virtual_machine" "vmseries_0" {
     "${element(azurerm_network_interface.nic2_static_0.*.id, count.index)}",
   ]
 
-  #  availability_set_id = "${azurerm_availability_set.fwavset.id}"
+  availability_set_id = "${azurerm_availability_set.default.id}"
   os_profile_linux_config {
     disable_password_authentication = false
   }
@@ -407,20 +413,22 @@ resource "azurerm_virtual_machine" "vmseries_0" {
   }
 
   storage_os_disk {
-    name              = "${local.fw_names[count.index]}-osdisk"
+    name              = "${var.prefix}${local.fw_names[count.index]}-osdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "${local.fw_names[count.index]}-osprofile"
+    computer_name  = "${var.prefix}${local.fw_names[count.index]}-osprofile"
     admin_username = "${var.fw_username}"
     admin_password = "${var.fw_password}"
 
     #   custom_data    = "${join(",", list("storage-account=${var.BootstrapStorageAccount}", "access-key=${var.StorageAccountAccessKey}", "file-share=${var.StorageAccountFileShare}", "share-directory=${var.StorageAccountFileShareDirectory}"))}"
   }
 }
+
+
 
 resource "azurerm_virtual_machine" "vmseries_1" {
   count                        = "${(element(local.vnet_option, 1)) ? 0 : length(local.fw_names)}"       //  "${length(local.fw_names)}"
@@ -436,7 +444,7 @@ resource "azurerm_virtual_machine" "vmseries_1" {
     "${element(azurerm_network_interface.nic2_static_1.*.id, count.index)}",
   ]
 
-  #  availability_set_id = "${azurerm_availability_set.fwavset.id}"
+  availability_set_id = "${azurerm_availability_set.default.id}"
   os_profile_linux_config {
     disable_password_authentication = false
   }
@@ -455,26 +463,25 @@ resource "azurerm_virtual_machine" "vmseries_1" {
   }
 
   storage_os_disk {
-    name              = "${local.fw_names[count.index]}-osdisk"
+    name              = "${var.prefix}${local.fw_names[count.index]}-osdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "${local.fw_names[count.index]}-osprofile"
+    computer_name  = "${var.prefix}${local.fw_names[count.index]}-osprofile"
     admin_username = "${var.fw_username}"
     admin_password = "${var.fw_password}"
-
     #   custom_data    = "${join(",", list("storage-account=${var.BootstrapStorageAccount}", "access-key=${var.StorageAccountAccessKey}", "file-share=${var.StorageAccountFileShare}", "share-directory=${var.StorageAccountFileShareDirectory}"))}"
   }
 }
 
 #************************************************************************************
-# CREATE PUBLIC_LB CONDITIONAL
+# CREATE PUBLIC_LB
 #************************************************************************************
 resource "azurerm_public_ip" "public_lb" {
-  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
+  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}"
   name                = "${var.prefix}${var.public_lb_name}-pip"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
@@ -483,7 +490,7 @@ resource "azurerm_public_ip" "public_lb" {
 }
 
 resource "azurerm_lb" "public_lb" {
-  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
+  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}"
   name                = "${var.prefix}${var.public_lb_name}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   location            = "${var.location}"
@@ -492,21 +499,18 @@ resource "azurerm_lb" "public_lb" {
   frontend_ip_configuration {
     name                 = "LoadBalancerFrontend"
     public_ip_address_id = "${join("",azurerm_public_ip.public_lb.*.id)}"
-
-    //  public_ip_address_id          = "${var.type == "public" ? join("",azurerm_public_ip.public_lb.*.id) : ""}"
   }
 }
 
 resource "azurerm_lb_backend_address_pool" "public_lb" {
-  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
+  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   loadbalancer_id     = "${azurerm_lb.public_lb.id}"
   name                = "BackendAddressPool"
 }
 
 resource "azurerm_lb_rule" "public_lb" {
-  count                          = "${element(local.appgw_publb_intlb_option, 1) ? length(local.public_lb_ports) : 0}" //"${(var.create_public_lb) ? length(local.public_lb_ports) : 0}"
-  resource_group_name            = "${azurerm_resource_group.fw_rg.name}"
+  count                          = "${element(local.appgw_publb_intlb_option, 1) ? length(local.public_lb_ports) : 0}"
   loadbalancer_id                = "${azurerm_lb.public_lb.id}"
   name                           = "rule-${count.index}"
   protocol                       = "${var.protocol}"
@@ -520,7 +524,7 @@ resource "azurerm_lb_rule" "public_lb" {
 }
 
 resource "azurerm_lb_probe" "public_lb" {
-  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}" //"${(var.create_public_lb) ? 1 : 0}"
+  count               = "${element(local.appgw_publb_intlb_option, 1) ? 1 : 0}"
   name                = "LoadBalancerHealthProbe"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
   loadbalancer_id     = "${azurerm_lb.public_lb.id}"
@@ -542,7 +546,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "public_lb
 }
 
 #************************************************************************************
-# CREATE INTERNAL_LB CONDITIONAL
+# CREATE INTERNAL_LB
 #************************************************************************************
 resource "azurerm_lb" "internal_lb_0" {
   count               = "${(element(local.vnet_option, 1)) && element(local.appgw_publb_intlb_option, 2) ? 1 : 0}"

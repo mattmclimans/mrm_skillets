@@ -24,6 +24,9 @@ variable "fw_names" {
 variable "fw_size" {
   default = "Standard_DS3_v2"
 }
+variable "fw_av_set_name" {
+  default = "vmseries-av-set"
+}
 
 variable "fw_panos" {
   default = "latest"

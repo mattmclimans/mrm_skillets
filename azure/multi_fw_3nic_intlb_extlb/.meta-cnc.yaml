@@ -89,13 +89,13 @@ variables:
          value: "1,1,0"
        - key: App GW, Internal LB
          value: "1,0,1"
-       - key: App GW
+       - key: App GW only
          value: "1,0,0"
        - key: Public LB, Internal LB
          value: "0,1,1"
-       - key: Public LB
+       - key: Public LB only
          value: "0,1,0"
-       - key: Internal LB
+       - key: Internal LB only
          value: "0,0,1"
     - name: public_lb_name
       description: Public LB Name
@@ -118,8 +118,12 @@ variables:
       default: vmseries-rg
       type_hint: text
     - name: fw_names
-      description: FW names (for every name entered, a new VM is created)
-      default: "vmseries-fw1,vmseries-fw2"
+      description: FW Names (for every name entered, a new VM is created)
+      default: "fw1,fw2"
+      type_hint: text
+    - name: fw_av_set_name
+      description: FW Availability Set Name
+      default: "fw-av-set"
       type_hint: text
     - name: fw_panos
       description: FW PAN-OS Version

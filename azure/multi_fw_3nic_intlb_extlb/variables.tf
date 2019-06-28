@@ -95,15 +95,17 @@ variable "internal_lb_address" {
 # VM-SERIES VARIABLES
 #************************************************************************************
 variable fw_rg {
-  description = "Enter a resource group"
   default     = "vmseries-rg"
 }
 
 variable "fw_names" {
-  description = "Enter firewall names.  Every name entered creates an additional instance"
+  description = "Enter firewall names. Every name entered creates an additional instance"
   default     = "fw1,fw2"
 }
 
+variable "fw_av_set_name" {
+  default = "vmseries-av-set"
+}
 variable "fw_panos" {
   default = "latest"
 }
