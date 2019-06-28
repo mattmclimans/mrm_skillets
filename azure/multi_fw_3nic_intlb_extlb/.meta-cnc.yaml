@@ -118,7 +118,7 @@ variables:
       default: vmseries-rg
       type_hint: text
     - name: fw_names
-      description: FW Names (for every name entered, a new VM is created)
+      description: FW Names (for every name entered, a new FW is created)
       default: "fw1,fw2"
       type_hint: text
     - name: fw_av_set_name
@@ -169,7 +169,7 @@ variables:
     - name: fw_password
       description: FW Password (1 upper & lower, 1 special, no slash or hyphen)
       default:
-      type_hint: securetext
+      type_hint: text
     - name: fw_nsg_prefix
       description: FW NSG Source Prefix
       default: "0.0.0.0/0"

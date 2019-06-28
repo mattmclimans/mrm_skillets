@@ -378,6 +378,7 @@ resource "azurerm_availability_set" "default" {
   name                = "${var.prefix}${var.fw_av_set_name}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.fw_rg.name}"
+  managed             = true
 }
 
 resource "azurerm_virtual_machine" "vmseries_0" {

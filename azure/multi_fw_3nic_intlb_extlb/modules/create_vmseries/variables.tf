@@ -89,7 +89,7 @@ variable "vnet_name" {
 
 variable "vnet_rg" {
   description = "Default resource group name that the network will be created in."
-  default     = "vmseries-rg"
+  default     = "vnet-rg"
 }
 
 variable "vnet_prefix" {
