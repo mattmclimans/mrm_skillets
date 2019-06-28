@@ -36,5 +36,7 @@ module "vmseries" {
   public_lb_ports          = "${var.public_lb_ports}"
   internal_lb_name         = "${var.internal_lb_name}"
   internal_lb_address      = "${var.internal_lb_address}"
+
+  prefix                   = "${var.prefix}"
 }
 

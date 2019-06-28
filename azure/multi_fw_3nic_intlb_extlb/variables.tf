@@ -31,9 +31,9 @@ variable location {
 #************************************************************************************
 
 variable "vnet_option" {
-#  default = "1,1" // create new vnet, new subnets
+  default = "1,1" // create new vnet, new subnets
 #  default = "0,1" // use existing vnet, create new subnets
-  default = "0,0" // use existing vnet, use existing subnets
+#  default = "0,0" // use existing vnet, use existing subnets
 }
 
 variable "vnet_rg" {
@@ -86,7 +86,7 @@ variable "internal_lb_name" {
   default = "internal-lb"
 }
 variable "internal_lb_address" {
-  default = "10.0.2.101"
+  default = "10.0.2.100"
 }
 
 
@@ -124,11 +124,14 @@ variable "fw_username" {
 }
 
 variable "fw_password" {
-#  default = ""
 }
 
 variable "fw_nsg_prefix" {
   description = "Enter a valid address prefix.  This address prefix will be able to access the firewalls mgmt interface over TCP/443 and TCP/22"
   default     = "0.0.0.0/0"
+}
+
+variable "prefix" {
+  default = ""
 }
 
